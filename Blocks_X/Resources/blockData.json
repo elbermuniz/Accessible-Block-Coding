@@ -1,0 +1,38 @@
+[
+    {
+        "name": "Move Forward",
+        "category": "Count",
+        "id": 1,
+        "systemName": "arrow.up.circle"
+    },
+    {
+        "name": "Move Backward",
+        "category": "Count",
+        "id": 2,
+        "systemName": "arrow.down.circle"
+    },
+    {
+        "name": "Turn Right",
+        "category": "Degrees",
+        "id": 3,
+        "systemName": "arrow.right.circle"
+    },
+    {
+        "name": "Turn Left",
+        "category": "Degrees",
+        "id": 4,
+        "systemName": "arrow.left.circle"
+    },
+    {
+        "name": "Stop",
+        "category": "Count",
+        "id": 5,
+        "systemName": "stop.circle"
+    },
+    {
+        "name": "Set Color To:",
+        "category": "Degrees",
+        "id": 6,
+        "systemName": "paintbrush.fill"
+    }
+]
