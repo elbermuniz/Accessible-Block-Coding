@@ -13,14 +13,18 @@ struct BlockRow: View {
 	var block: Block
 	
     var body: some View {
-		HStack{
+		VStack{
 			Text(block.name)
-				.font(.body)
 			Image(systemName: block.systemName)
 				.resizable()
 				.frame(width: 30, height: 30)
 			Spacer()
-		}.padding(.all, 10)
+            }.padding(.all, 10)
+            .overlay(Rectangle().opacity(0.4)
+                .frame(width: 130, height: 90)
+                .foregroundColor(Color.purple))
+//            .border(Color.blue, width: 5)
+//            .foregroundColor(Color.purple)
     }
 }
 

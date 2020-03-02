@@ -19,6 +19,7 @@ struct ContentView: View {
 			
 			HStack {
 				BlockList().frame(width: 300, height: 650).background(Color.gray)
+                
 				Spacer()
 				VStack(alignment: .leading) {
 					Section {
@@ -35,7 +36,16 @@ struct ContentView: View {
 	}
 }
 
-struct ContentView_Previews: PreviewProvider {
+//struct BlockView: View {
+//    let block: Block
+//    
+//    var body: some View {
+//        VStack {
+//            Image(system)
+//        }
+//    }
+//}
+struct ContentView_Previews: PreviewProvider { //doesn't execute in app
     static var previews: some View {
         ContentView(block: blockData[0])
     }
