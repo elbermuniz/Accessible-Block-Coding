@@ -22,9 +22,7 @@ struct BlockRow: View {
             }.padding(.all, 10)
             .overlay(Rectangle().opacity(0.4)
                 .frame(width: 130, height: 90)
-                .foregroundColor(Color.purple))
-//            .border(Color.blue, width: 5)
-//            .foregroundColor(Color.purple)
+                .foregroundColor(Color.blue))
     }
 }
 
