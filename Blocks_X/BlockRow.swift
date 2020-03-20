@@ -18,7 +18,6 @@ struct BlockRow: View {
 			Image(systemName: block.systemName)
 				.resizable()
 				.frame(width: 30, height: 30)
-			Spacer()
             }.padding(.all, 10)
             .overlay(Rectangle().opacity(0.4)
                 .frame(width: 130, height: 90)
