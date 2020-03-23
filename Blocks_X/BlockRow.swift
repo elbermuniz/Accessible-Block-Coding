@@ -18,6 +18,7 @@ struct BlockRow: View {
     var body: some View {
 		ZStack {
 			Rectangle()
+				.cornerRadius(12)
 				.frame(width: 130, height: 90)
 				.zIndex(-10)
 				.foregroundColor(blockColor(bColor: block.color))
