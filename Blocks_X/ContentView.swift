@@ -10,42 +10,58 @@ import SwiftUI
 
 struct ContentView: View {
 	var block: Block
-	
+
     var body: some View {
 		VStack{
+			
+// Start of header section
 			HStack {
-				Text("BlockX")
-					.padding(.leading)
+				Section{
+					Image(systemName: "chevron.left")
+						.font(.title)
+						.padding(.leading)
+
+					Text("BlockX")
+				}
+				.foregroundColor(.blue)
+
+				Spacer()
 				Spacer()
 				Text("Welcome!")
 					.multilineTextAlignment(.center)
-					.padding([.top, .leading, .bottom], 10.0)
+					.padding(.vertical, 10.0)
 				Spacer()
-				Button(action: {
-					print("Volume tapped!")
-				}) {
-					HStack {
-						Text("Robot Settings")
-						.fontWeight(.semibold)
-						.font(.title)
-						Image(systemName: "gear")
+
+				Section {
+					Button(action: {
+						print("Volume tapped!")
+					}) {
+						HStack {
+							Text("Robot Settings")
+							.fontWeight(.semibold)
 							.font(.title)
-							.padding(.vertical, 5)
+							Image(systemName: "gear")
+								.font(.title)
+								.padding(.vertical, 5)
+						}
+						.padding()
+						.foregroundColor(.white)
+						.background(Color.blue)
+						.cornerRadius(90)
 					}
-					.padding()
-					.foregroundColor(.white)
-					.background(Color.blue)
-					.cornerRadius(90)
+					.padding(.trailing)
 				}
-				.padding(.trailing)
 			}
 			.frame(height: 100.0)
 			.background(Color.gray)
+// End of header section
 			
 			Spacer()
-			
+
+// Start of main content area
 			HStack {
-				VStack{
+// Start of commands area
+				VStack {
 					HStack {
 						Text("CODE")
 							.font(.headline)
@@ -53,26 +69,30 @@ struct ContentView: View {
 							.multilineTextAlignment(.leading)
 							.padding([.top, .leading, .bottom])
 							.foregroundColor(.white)
-						
+
 						Spacer()
-						
+
 						Image(systemName: "line.horizontal.3")
 							.font(.title)
 							.foregroundColor(.white)
 							.padding(.trailing)
 					}
 					.background(Color.blue)
-					
-					BlockList().frame(width: 200, height: 600)
+
+					BlockList()
+						.frame(width: 250, height: 600)
 				}
-				.frame(width: 200.0)
+				.frame(width: 250.0)
 				.background(Color.gray)
-				
-				Spacer()
-				
-				VStack(alignment: .leading) {
+				.zIndex(10)
+// End of commands area
+
+				//Spacer()
+
+// Start of drop area and top and bottom buttons
+				ZStack(alignment: .leading) {
 					HStack(spacing: 0.0) {
-						Spacer()
+						//Spacer()
 						Button(action: {
 							print("Volume tapped!")
 						}) {
@@ -86,7 +106,7 @@ struct ContentView: View {
 							.background(Color.blue)
 							.cornerRadius(90)
 						}
-						
+
 						Button(action: {
 							print("Help tapped!")
 						}) {
@@ -101,18 +121,26 @@ struct ContentView: View {
 							.cornerRadius(90)
 						}
 					}
-					
+					.padding(.trailing, 10)
+					.offset(x: 800, y: -290)
+
+// Main drop area
 					Section {
 						Text("Drag and drop commands into this area!")
 							.font(.headline)
 							.fontWeight(.light)
+							.foregroundColor(Color.white)
 							.multilineTextAlignment(.center)
 							.frame(width: 120.0)
 					}
-					.frame(width: 800, height: 500).background(Color.gray)
-					
+					.frame(width: 946, height: 660).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
+					//.padding(.leading, 0)
+					.zIndex(-1)
+					.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
+
+// Botttom row of buttons
 					HStack(spacing: 0.0) {
-						Spacer()
+						//Spacer()
 						Button(action: {
 							print("Play tapped!")
 						}) {
@@ -127,7 +155,7 @@ struct ContentView: View {
 							.background(Color.blue)
 							.cornerRadius(90)
 						}
-						
+
 						Button(action: {
 							print("Trash tapped!")
 						}) {
@@ -136,35 +164,33 @@ struct ContentView: View {
 									.font(.title)
 									.padding(.all, 5)
 							}
-							.padding()
+							.padding(.all)
 							.foregroundColor(.white)
 							.background(Color.blue)
 							.cornerRadius(90)
 						}
 					}
+					.padding(.trailing, 10)
+					.offset(x: 800, y: 290)
 				}
-				.padding()
+				.offset(x:-8)
+// End of main drop area
 
-				Spacer()
+				//Spacer()
 			}
 			.padding(.top, -30.0)
 			
+// End of center area
 			Spacer()
 		}
+		.background(Color.black)
 	}
 }
 
-//struct BlockView: View {
-//    let block: Block
-//    
-//    var body: some View {
-//        VStack {
-//            Image(system)
-//        }
-//    }
-//}
+
 struct ContentView_Previews: PreviewProvider { //doesn't execute in app
     static var previews: some View {
-        ContentView(block: blockData[0])
+       ContentView(block: blockData[0])
+		//ContentView()
     }
 }

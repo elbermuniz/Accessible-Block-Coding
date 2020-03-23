@@ -9,16 +9,13 @@
 import SwiftUI
 
 struct BlockList: View {
-    var body: some View {
-//		List(blockData) { (block) -> BlockRow in
-//
-//			BlockRow(block: block)
-//		}.padding()
+    
+	var body: some View {
         VStack {
             ForEach(blockData) { block in
                 BlockRow(block: block)
-            }
-        }.padding(50)
+			}.padding(-3.5)
+        }
     }
 }
 

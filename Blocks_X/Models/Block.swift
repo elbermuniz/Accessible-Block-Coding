@@ -15,6 +15,7 @@ struct Block: Hashable, Codable, Identifiable {
     var name: String
     var category: Category
 	var systemName: String
+	var color: String
 
     enum Category: String, CaseIterable, Codable, Hashable {
         case count = "Count"

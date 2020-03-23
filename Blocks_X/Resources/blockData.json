@@ -3,36 +3,42 @@
         "name": "Move Forward",
         "category": "Count",
         "id": 1,
-        "systemName": "arrow.up.circle"
+        "systemName": "arrow.up.circle",
+		"color": "blue"
     },
     {
         "name": "Move Backward",
         "category": "Count",
         "id": 2,
-        "systemName": "arrow.down.circle"
+        "systemName": "arrow.down.circle",
+		"color": "green"
     },
     {
         "name": "Turn Right",
         "category": "Degrees",
         "id": 3,
-        "systemName": "arrow.right.circle"
+        "systemName": "arrow.right.circle",
+		"color": "purple"
     },
     {
         "name": "Turn Left",
         "category": "Degrees",
         "id": 4,
-        "systemName": "arrow.left.circle"
+        "systemName": "arrow.left.circle",
+		"color": "orange"
     },
     {
         "name": "Stop",
         "category": "Count",
         "id": 5,
-        "systemName": "stop.circle"
+        "systemName": "stop.circle",
+		"color": "red"
     },
     {
         "name": "Set Color To:",
         "category": "Degrees",
         "id": 6,
-        "systemName": "paintbrush.fill"
+        "systemName": "paintbrush.fill",
+		"color": "yellow"
     }
 ]
