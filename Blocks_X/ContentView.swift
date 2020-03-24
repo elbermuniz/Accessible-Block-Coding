@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+	@State private var activeCommands = [Int] (repeating: 6, count: 6)
+	@State private var commandList = [Int] (repeating: 0, count: 6)
 	@State private var commandFrames = [CGRect](repeating: .zero, count: 6)
 	
 	var block: Block
@@ -82,11 +84,14 @@ struct ContentView: View {
 					.background(Color.blue)
 					
 					VStack {
-						ForEach(blockData) { block in
-							if(block.color != "clear"){
-								BlockRow(blockVar: block, onChanged: self.commandMoved, index: block.id)
-							}
+						ForEach(0..<6){ number in
+							BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number)
 						}.padding(-3.5)
+//						ForEach(blockData) { block in
+//							if(block.color != "clear"){
+//								BlockRow(blockVar: block, onChanged: self.commandMoved, index: block.id)
+//							}
+//						}.padding(-3.5)
 					}
 					.frame(width: 250, height: 600)
 				}
@@ -95,13 +100,29 @@ struct ContentView: View {
 				.zIndex(10)
 				// End of commands area
 				
-				//Spacer()
-				
 				// Start of drop area and top and bottom buttons
 				ZStack(alignment: .leading) {
+//					VStack {
+//						ForEach(0..<5) { _ in
+//							HStack {
+//								ForEach(0..<6){ number in
+//									BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
+//										.overlay(
+//											GeometryReader { geo in
+//												Color.clear
+//													.onAppear{
+//														self.commandFrames[number] = geo.frame(in: .global)
+//												}
+//											}
+//									)
+//								}
+//							}
+//							.offset(x:10,y:-25)
+//						}.foregroundColor(Color.white)
+//					}
 					HStack {
 						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
+							BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
 								.overlay(
 									GeometryReader { geo in
 										Color.clear
@@ -110,10 +131,27 @@ struct ContentView: View {
 										}
 									}
 							)
-						}.padding(.horizontal,11)
+						}
 					}
 					.offset(x:10,y:-270)
 					
+					
+//					VStack {
+//						ForEach(0..<8) { _ in
+////							HStack {
+////								ForEach(0..<3) { _ in
+////									Text("he")
+////										//.resizable()
+////										.scaledToFit()
+////								}
+////							}
+//						}
+//						.foregroundColor(Color.white)
+//					}
+//					.frame(width: 600, height: 400).background(Color.clear)
+					
+
+
 					HStack {
 						ForEach(0..<6){ number in
 							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
@@ -125,10 +163,11 @@ struct ContentView: View {
 										}
 									}
 							)
-						}.padding(.horizontal,11)
+						}
+						//.padding(.horizontal,11)
 					}
 					.offset(x:10,y:-150)
-					
+
 					HStack {
 						ForEach(0..<6){ number in
 							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
@@ -140,10 +179,11 @@ struct ContentView: View {
 										}
 									}
 							)
-						}.padding(.horizontal,11)
+						}
+						//.padding(.horizontal,11)
 					}
 					.offset(x:10,y:-30)
-					
+
 					HStack {
 						ForEach(0..<6){ number in
 							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
@@ -155,10 +195,11 @@ struct ContentView: View {
 										}
 									}
 							)
-						}.padding(.horizontal,11)
+						}
+						//.padding(.horizontal,11)
 					}
 					.offset(x:10,y:90)
-					
+
 					HStack {
 						ForEach(0..<6){ number in
 							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
@@ -170,7 +211,8 @@ struct ContentView: View {
 										}
 									}
 							)
-						}.padding(.horizontal,11)
+						}
+						//.padding(.horizontal,11)
 					}
 					.offset(x:10,y:210)
 
@@ -254,6 +296,7 @@ struct ContentView: View {
 					.offset(x: 670, y: 290)
 					.zIndex(20)
 				}
+				//.frame(width: 600, height: 400)
 				.offset(x:-8)
 				// End of main drop area
 				
@@ -265,22 +308,39 @@ struct ContentView: View {
 			Spacer()
 		}
 		.background(Color.black)
+		.onAppear(perform: startApp)
+	}
+	
+	func startApp() {
+		let commands = [0,1,2,3,4,5]
+		let test = [6,6,6,6,6,6]
+		
+		commandList = commands
+		activeCommands = test
+		print(activeCommands)
+		print(commandList)
 	}
 	
 	func commandDropped(location: CGPoint, blockIndex: Int, block: Block) {
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			//activeFrame[match] = block
 			
-			//blocklist.remove(at: listIndex)
-			//blocklist.append(block.id)
+			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[match])
+			activeCommands[match] = block.id
+			
+			commandList[blockIndex] = block.id
 		}
 	}
 	
 	func commandMoved(location: CGPoint, block: Block) -> DragState {
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			if block.name == "" { return .bad }
-			else { return .good }
-			
+			if activeCommands[match] != 6 {
+			//	print("this is bad: ", activeCommands[match])
+				return .bad
+			}
+			else {
+			//	print("this is good: ", activeCommands[match])
+				return .good
+			}
 		} else {
 			return .unknown
 		}
