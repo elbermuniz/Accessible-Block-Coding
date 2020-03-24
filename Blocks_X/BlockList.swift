@@ -12,9 +12,12 @@ struct BlockList: View {
     
 	var body: some View {
         VStack {
-            ForEach(blockData) { block in
-                BlockRow(block: block)
-			}.padding(-3.5)
+//            ForEach(blockData) { block in
+//				if(block.color != "clear"){
+//					BlockRow(blockVar: block)
+//				}
+//			}.padding(-3.5)
+			Text("h")
         }
     }
 }
