@@ -36,7 +36,7 @@ struct ContentView: View {
 				
 				Section {
 					Button(action: {
-						print("Volume tapped!")
+						print("Robot Settings!")
 					}) {
 						HStack {
 							Text("Robot Settings")
@@ -173,7 +173,24 @@ struct ContentView: View {
 						}.padding(.horizontal,11)
 					}
 					.offset(x:10,y:210)
+
+					// Main drop area
+					Section {
+						Text("Drag and drop commands into this area!")
+							.font(.headline)
+							.fontWeight(.light)
+							.foregroundColor(Color.white)
+							.multilineTextAlignment(.center)
+							.frame(width: 190.0)
+							.zIndex(10)
+							.offset(y:290)
+					}
+					.frame(width: 946, height: 660).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
+						//.padding(.leading, 0)
+						.zIndex(-1)
+						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
 					
+					// Botttom row of buttons
 					HStack(spacing: 0.0) {
 						//Spacer()
 						Button(action: {
@@ -203,28 +220,7 @@ struct ContentView: View {
 							.background(Color.blue)
 							.cornerRadius(90)
 						}
-					}
-					.padding(.trailing, 10)
-					.offset(x: 800, y: -290)
-					// Main drop area
-					Section {
-						Text("Drag and drop commands into this area!")
-							.font(.headline)
-							.fontWeight(.light)
-							.foregroundColor(Color.white)
-							.multilineTextAlignment(.center)
-							.frame(width: 190.0)
-							.zIndex(10)
-							.offset(y:290)
-					}
-					.frame(width: 946, height: 660).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
-						//.padding(.leading, 0)
-						.zIndex(-1)
-						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
-					
-					// Botttom row of buttons
-					HStack(spacing: 0.0) {
-						//Spacer()
+						
 						Button(action: {
 							print("Play tapped!")
 						}) {
@@ -255,7 +251,8 @@ struct ContentView: View {
 						}
 					}
 					.padding(.trailing, 10)
-					.offset(x: 800, y: 290)
+					.offset(x: 670, y: 290)
+					.zIndex(20)
 				}
 				.offset(x:-8)
 				// End of main drop area
