@@ -42,7 +42,9 @@ struct MainBodyView: View {
 							BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number)
 						}.padding(-3.5)
 					}
-					.frame(width: 250, height: 600)
+					.frame(width: 250, height: 525)
+					
+					SliderView().offset(y:-20)
 				}
 				.frame(minWidth: geometry.size.width * (0.25))
 				.background(Color.gray)
