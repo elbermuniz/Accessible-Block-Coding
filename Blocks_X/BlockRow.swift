@@ -72,7 +72,7 @@ extension View {
 						Capsule(style: .continuous)
 							.stroke(blockColor(bColor: block.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
 					)
-			}.padding(.horizontal, 7.5)
+			}.padding(.horizontal, 5)
 			)
 		} else {
 			return AnyView(ZStack {
@@ -89,7 +89,7 @@ extension View {
 						.resizable()
 						.frame(width: 30, height: 30)
 				}
-				.frame(width: 140, height: 90)
+				.frame(width: 135, height: 90)
 				}
 			)
 		}
