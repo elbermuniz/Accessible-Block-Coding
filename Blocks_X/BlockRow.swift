@@ -22,16 +22,12 @@ struct BlockRow: View {
 	var onChanged: ((CGPoint, Block) -> DragState)?
 	var onEnded: ((CGPoint, Int, Block) -> Void)?
 	var index: Int
-	
-	//	@State private var currentPosition: CGSize = .zero
-	//	@State private var newPosition: CGSize = .zero
-	
+
 	var body: some View {
 		ZStack {
 			createBlock(block: blockVar)
 				
 				//Drag & Drop Functionality
-				//			.offset(x: self.currentPosition.width, y: self.currentPosition.height)
 				.offset(dragAmount)
 				.zIndex(dragAmount == .zero ? 0 : 1) // TODO: Figure out why block goes behind
 				.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
@@ -40,21 +36,15 @@ struct BlockRow: View {
 					.onChanged { value in
 						self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
 						self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
-						//					self.currentPosition = CGSize(width: value.translation.width + self.newPosition.width, height: value.translation.height + self.newPosition.height)
 				}
 				.onEnded {
 					if(self.dragState == .good){
 						self.onEnded?($0.location, self.index, self.blockVar)
 					}
-					self.dragAmount = .zero
-					//					self.currentPosition = .zero
-					//						self.currentPosition = CGSize(width: value.translation.width + self.newPosition.width, height: value.translation.height + self.newPosition.height)
-					//						print("update: ", self.currentPosition)
-					//						self.newPosition = self.currentPosition
+						self.dragAmount = .zero
 					}
 			)
 				.zIndex(dragAmount == .zero ? 0 : 1)
-			//createBlock(block: blockVar).zIndex(1)
 		}
 	}
 	
@@ -82,7 +72,7 @@ extension View {
 						Capsule(style: .continuous)
 							.stroke(blockColor(bColor: block.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
 					)
-				}.padding(.horizontal, 11)
+			}.padding(.horizontal, 7.5)
 			)
 		} else {
 			return AnyView(ZStack {
@@ -99,7 +89,7 @@ extension View {
 						.resizable()
 						.frame(width: 30, height: 30)
 				}
-				.frame(width: 148, height: 90)
+				.frame(width: 140, height: 90)
 				}
 			)
 		}
@@ -139,6 +129,6 @@ func blockColor(bColor: String) -> Color {
 
 struct BlockRow_Previews: PreviewProvider {
 	static var previews: some View {
-		BlockRow(blockVar: blockData[1], index: 0)
+		BlockRow(blockVar: blockData[6], index: 0)
 	}
 }

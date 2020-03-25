@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7256EB722408E06200D6605F /* BlockList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7256EB712408E06200D6605F /* BlockList.swift */; };
 		7258EC8E2408B9FE004DC42C /* BlockRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258EC8D2408B9FD004DC42C /* BlockRow.swift */; };
 		7258EC912408C5E0004DC42C /* blockData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7258EC902408C5E0004DC42C /* blockData.json */; };
 		7258EC932408D3AB004DC42C /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258EC922408D3AB004DC42C /* Block.swift */; };
@@ -21,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		7256EB712408E06200D6605F /* BlockList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockList.swift; sourceTree = "<group>"; };
 		7258EC8D2408B9FD004DC42C /* BlockRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockRow.swift; sourceTree = "<group>"; };
 		7258EC902408C5E0004DC42C /* blockData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = blockData.json; sourceTree = "<group>"; };
 		7258EC922408D3AB004DC42C /* Block.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
@@ -87,7 +85,6 @@
 				72DE4BF0240703D30075DBB6 /* SceneDelegate.swift */,
 				72DE4BF2240703D30075DBB6 /* ContentView.swift */,
 				7258EC8D2408B9FD004DC42C /* BlockRow.swift */,
-				7256EB712408E06200D6605F /* BlockList.swift */,
 				7258EC942408D3DF004DC42C /* Models */,
 				7258EC8F2408C530004DC42C /* Resources */,
 				72DE4BF4240703DA0075DBB6 /* Assets.xcassets */,
@@ -179,7 +176,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				7258EC8E2408B9FE004DC42C /* BlockRow.swift in Sources */,
-				7256EB722408E06200D6605F /* BlockList.swift in Sources */,
 				7258EC962408D75B004DC42C /* Data.swift in Sources */,
 				72DE4BEF240703D30075DBB6 /* AppDelegate.swift in Sources */,
 				7258EC932408D3AB004DC42C /* Block.swift in Sources */,

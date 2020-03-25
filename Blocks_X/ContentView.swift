@@ -9,9 +9,10 @@
 import SwiftUI
 
 struct ContentView: View {
-	@State private var activeCommands = [Int] (repeating: 6, count: 6)
+	@State private var activeCommands: [[Int]] = Array(repeating: Array(repeating: 6, count: 6), count: 5)
 	@State private var commandList = [Int] (repeating: 0, count: 6)
-	@State private var commandFrames = [CGRect](repeating: .zero, count: 6)
+	@State private var commandFrames = [CGRect](repeating: .zero, count: 30)
+	@State private var count = 0
 	
 	var block: Block
 	
@@ -87,11 +88,6 @@ struct ContentView: View {
 						ForEach(0..<6){ number in
 							BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number)
 						}.padding(-3.5)
-//						ForEach(blockData) { block in
-//							if(block.color != "clear"){
-//								BlockRow(blockVar: block, onChanged: self.commandMoved, index: block.id)
-//							}
-//						}.padding(-3.5)
 					}
 					.frame(width: 250, height: 600)
 				}
@@ -102,120 +98,32 @@ struct ContentView: View {
 				
 				// Start of drop area and top and bottom buttons
 				ZStack(alignment: .leading) {
-//					VStack {
-//						ForEach(0..<5) { _ in
-//							HStack {
-//								ForEach(0..<6){ number in
-//									BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
-//										.overlay(
-//											GeometryReader { geo in
-//												Color.clear
-//													.onAppear{
-//														self.commandFrames[number] = geo.frame(in: .global)
-//												}
-//											}
-//									)
-//								}
-//							}
-//							.offset(x:10,y:-25)
-//						}.foregroundColor(Color.white)
-//					}
-					HStack {
-						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
-								.overlay(
-									GeometryReader { geo in
-										Color.clear
-											.onAppear{
-												self.commandFrames[number] = geo.frame(in: .global)
-										}
+					VStack {
+						ForEach(0..<5) { row in
+							HStack {
+								ForEach(0..<6){ column in
+									HStack{
+										// Needed to increase global count variable
+										Text("_____")
+											.onAppear(perform: self.increaseCount)
 									}
-							)
-						}
+									.frame(width:0, height:0)
+									
+									BlockRow(blockVar: blockData[self.activeCommands[row][column]], onChanged: self.commandMoved, index: 5*row+column)
+										.overlay(
+											GeometryReader { geo in
+												Color.clear
+													.onAppear{
+														self.commandFrames[self.count] = geo.frame(in: .global)
+												}
+											}
+									)
+								}
+							}
+							.offset(x:7,y:-25)
+						}.foregroundColor(Color.white)
 					}
-					.offset(x:10,y:-270)
 					
-					
-//					VStack {
-//						ForEach(0..<8) { _ in
-////							HStack {
-////								ForEach(0..<3) { _ in
-////									Text("he")
-////										//.resizable()
-////										.scaledToFit()
-////								}
-////							}
-//						}
-//						.foregroundColor(Color.white)
-//					}
-//					.frame(width: 600, height: 400).background(Color.clear)
-					
-
-
-					HStack {
-						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
-								.overlay(
-									GeometryReader { geo in
-										Color.clear
-											.onAppear{
-												self.commandFrames[number] = geo.frame(in: .global)
-										}
-									}
-							)
-						}
-						//.padding(.horizontal,11)
-					}
-					.offset(x:10,y:-150)
-
-					HStack {
-						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
-								.overlay(
-									GeometryReader { geo in
-										Color.clear
-											.onAppear{
-												self.commandFrames[number] = geo.frame(in: .global)
-										}
-									}
-							)
-						}
-						//.padding(.horizontal,11)
-					}
-					.offset(x:10,y:-30)
-
-					HStack {
-						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
-								.overlay(
-									GeometryReader { geo in
-										Color.clear
-											.onAppear{
-												self.commandFrames[number] = geo.frame(in: .global)
-										}
-									}
-							)
-						}
-						//.padding(.horizontal,11)
-					}
-					.offset(x:10,y:90)
-
-					HStack {
-						ForEach(0..<6){ number in
-							BlockRow(blockVar: blockData[6], onChanged: self.commandMoved, index: number)
-								.overlay(
-									GeometryReader { geo in
-										Color.clear
-											.onAppear{
-												self.commandFrames[number] = geo.frame(in: .global)
-										}
-									}
-							)
-						}
-						//.padding(.horizontal,11)
-					}
-					.offset(x:10,y:210)
-
 					// Main drop area
 					Section {
 						Text("Drag and drop commands into this area!")
@@ -228,11 +136,10 @@ struct ContentView: View {
 							.offset(y:290)
 					}
 					.frame(width: 946, height: 660).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
-						//.padding(.leading, 0)
-						.zIndex(-1)
-						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
+					.zIndex(-1)
+					.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
 					
-					// Botttom row of buttons
+					// Bottom row of buttons
 					HStack(spacing: 0.0) {
 						//Spacer()
 						Button(action: {
@@ -280,6 +187,7 @@ struct ContentView: View {
 						
 						Button(action: {
 							print("Trash tapped!")
+							self.activeCommands = [[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6]]
 						}) {
 							VStack {
 								Image(systemName: "trash")
@@ -296,8 +204,8 @@ struct ContentView: View {
 					.offset(x: 670, y: 290)
 					.zIndex(20)
 				}
-				//.frame(width: 600, height: 400)
-				.offset(x:-8)
+					//.frame(width: 600, height: 400)
+					.offset(x:-8)
 				// End of main drop area
 				
 				//Spacer()
@@ -311,34 +219,46 @@ struct ContentView: View {
 		.onAppear(perform: startApp)
 	}
 	
+	func increaseCount() {
+		print("Build count: ", count)
+		count = count+1
+	}
+	
 	func startApp() {
 		let commands = [0,1,2,3,4,5]
-		let test = [6,6,6,6,6,6]
+		//	let test = [[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6]]
 		
 		commandList = commands
-		activeCommands = test
-		print(activeCommands)
-		print(commandList)
+		//	activeCommands = test
 	}
 	
 	func commandDropped(location: CGPoint, blockIndex: Int, block: Block) {
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
+			let match = 29 - match
 			
-			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[match])
-			activeCommands[match] = block.id
+			let row = match/6
+			let column = match % 6
+			
+			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[row][column])
+			activeCommands[row][column] = block.id
 			
 			commandList[blockIndex] = block.id
+			
+			print(activeCommands)
 		}
 	}
 	
 	func commandMoved(location: CGPoint, block: Block) -> DragState {
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			if activeCommands[match] != 6 {
-			//	print("this is bad: ", activeCommands[match])
+			let match = 29 - match
+			
+			let row = match/6
+			let column = match % 6
+			
+			if activeCommands[row][column] != 6 {
 				return .bad
 			}
 			else {
-			//	print("this is good: ", activeCommands[match])
 				return .good
 			}
 		} else {
