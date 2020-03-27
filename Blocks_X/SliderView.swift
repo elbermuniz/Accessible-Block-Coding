@@ -9,18 +9,20 @@
 import SwiftUI
 
 struct SliderView: View {
-	@State private var amount: Double = 1
+	var colors = ["Red", "Green", "Blue", "Tartan"]
+	@State private var selectedColor = 0
+	
     var body: some View {
 		VStack {
-			Text("Increase Move Amount:").offset(y:20)
-			HStack {
-				Slider(value: $amount, in: 1...15, step: 1)
-					.frame(width: 200)
-				Text("\(Int(amount))")
-			}
+		   Picker(selection: $selectedColor, label: Text("Please choose a color")) {
+			  ForEach(0 ..< colors.count) {
+				 Text((self.colors[$0]))
+			  }
+		   }
+			.pickerStyle(WheelPickerStyle())
+		   Text("You selected: \(colors[selectedColor])")
 		}
-		.frame(width: 250)
-    }
+	}
 }
 
 struct SliderView_Previews: PreviewProvider {

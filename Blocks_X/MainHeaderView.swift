@@ -49,7 +49,7 @@ struct MainHeaderView: View {
 				}
 			}
 //			.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height)
-				.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: 110).background(Color.gray)
+				.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height).background(Color.gray)
 		}
 	}
 }

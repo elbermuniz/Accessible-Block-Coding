@@ -29,7 +29,7 @@ struct BlockRow: View {
 				
 				//Drag & Drop Functionality
 				.offset(dragAmount)
-				.zIndex(dragAmount == .zero ? 0 : 1) // TODO: Figure out why block goes behind
+				.zIndex(dragAmount == .zero ? 0 : 30) // TODO: Figure out why block goes behind
 				.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
 				.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
 				.gesture(DragGesture(coordinateSpace: .global)
@@ -67,21 +67,22 @@ extension View {
 				Rectangle()
 					.foregroundColor(.clear)
 					.padding()
-					.frame(width: 125, height: 90)
+					.frame(width: 190, height: 70)
 					.overlay(
 						Capsule(style: .continuous)
 							.stroke(blockColor(bColor: block.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
 					)
-			}.padding(.horizontal, 5)
+			}
+			.padding(.horizontal, 5)
 			)
 		} else {
 			return AnyView(ZStack {
 				Rectangle()
 					.cornerRadius(12)
-					.frame(width: 130, height: 90)
+					.frame(width: 200, height: 70)
 					.zIndex(-10)
 					.foregroundColor(blockColor(bColor: block.color))
-				VStack {
+				HStack {
 					Text(block.name)
 						.foregroundColor(Color.black)
 						.zIndex(10)
@@ -89,7 +90,7 @@ extension View {
 						.resizable()
 						.frame(width: 30, height: 30)
 				}
-				.frame(width: 135, height: 90)
+				.frame(width: 200, height: 70)
 				}
 			)
 		}
@@ -129,6 +130,9 @@ func blockColor(bColor: String) -> Color {
 
 struct BlockRow_Previews: PreviewProvider {
 	static var previews: some View {
-		BlockRow(blockVar: blockData[6], index: 0)
+		VStack{
+			BlockRow(blockVar: blockData[6], index: 0)
+			BlockRow(blockVar: blockData[0], index: 0)
+		}
 	}
 }
