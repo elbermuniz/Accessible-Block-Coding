@@ -9,10 +9,10 @@
 import SwiftUI
 
 struct MainBodyView: View {
-	@State private var activeCommands = [Int] (repeating: 6, count: 10)
+	@State private var activeCommands = [Int] (repeating: 6, count: 20)
 	//	@State private var activeCommands: [[Int]] = Array(repeating: Array(repeating: 6, count: 5), count: 5) // what block is inside grid
 	@State private var commandList = [Int] (repeating: 0, count: 6) //commands on the left
-	@State private var commandFrames = [CGRect](repeating: .zero, count: 10) // the grid values
+	@State private var commandFrames = [CGRect](repeating: .zero, count: 20) // the grid values
 	@State private var count = 0
 	
 	var body: some View {
@@ -46,8 +46,11 @@ struct MainBodyView: View {
 						VStack {
 							ForEach(0..<6){ number in
 								BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number)
-							}.padding(-3.5)
+							}
+							.padding(-3.5)
+							.zIndex(30)
 						}
+						.zIndex(30)
 						.frame(width: 250, height: 525)
 						
 						//SliderView().offset(y:-20)
@@ -69,9 +72,9 @@ struct MainBodyView: View {
 							Spacer()
 							
 							VStack {
-								ScrollView(.vertical) {
-									VStack {
-										ForEach(0..<10){ number in
+								VStack {
+									ScrollView(.vertical) {
+										ForEach(0..<20){ number in
 											BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
 												.overlay(
 													GeometryReader { geos in
@@ -80,20 +83,23 @@ struct MainBodyView: View {
 																self.commandFrames[number] = geos.frame(in: .global)
 														}
 													}
-											)
+												)
 										}
+										.frame(width: 500)
 									}
+								}
+								.frame(minWidth: 0, maxWidth: geo.size.width / 3, minHeight: 0, maxHeight: geo.size.height * (0.8))
+									.allowsHitTesting(false)
 									.foregroundColor(Color.white)
 									.padding(.top, 15)
 									.padding(.horizontal, 40)
-								}
-								.frame(minWidth: 0, maxWidth: geo.size.width / 3, minHeight: 0, maxHeight: geo.size.height * (0.8))
 								
 								//.offset(y: -geo.size.height * (0.1))
-								.zIndex(14)
+								.zIndex(3)
 								
 								Spacer()
-								
+
+//									.frame(width:200, height: 200)
 								Text("Drag and drop commands into this area!")
 									.font(.headline)
 									.fontWeight(.light)
@@ -102,7 +108,10 @@ struct MainBodyView: View {
 									.frame(width: 190.0)
 									.zIndex(1)
 									.padding(.bottom, 20)
+									.zIndex(5)
+									.frame(width:50, height: 200)
 							}
+							.zIndex(1)
 							
 							Spacer()
 							
@@ -147,7 +156,7 @@ struct MainBodyView: View {
 									//Spacer()
 									Button(action: {
 										print("Trash tapped!")
-										self.activeCommands = [Int] (repeating: 6, count: 10)
+										self.activeCommands = [Int] (repeating: 6, count: 20)
 										//							self.activeCommands = [[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6]]
 									}) {
 										VStack {
@@ -183,6 +192,7 @@ struct MainBodyView: View {
 									//.padding(.trailing, 10)
 									//.offset(x: geo.size.width * (0.75), y: geo.size.height * (0.89))
 							}
+						.zIndex(-1)
 						}
 						.frame(minWidth: geo.size.width, maxWidth: geo.size.width, minHeight: 0, maxHeight: geo.size.height).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
 						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
@@ -192,6 +202,7 @@ struct MainBodyView: View {
 					// Bottom row of buttons
 					
 				}
+				.zIndex(2)
 				.frame(width: geometry.size.width * (0.70))
 				.offset(x: -7.5)
 				// End of main drop area
@@ -217,13 +228,14 @@ struct MainBodyView: View {
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
 			
 			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[match])
-			activeCommands[match] = block.id
+			activeCommands[match] = block.id + 7
 			
 			commandList[blockIndex] = block.id
 		}
 	}
 	
 	func commandMoved(location: CGPoint, block: Block) -> DragState {
+		print(location)
 		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
 			if activeCommands[match] != 6 {
 				//	print("this is bad: ", activeCommands[match])

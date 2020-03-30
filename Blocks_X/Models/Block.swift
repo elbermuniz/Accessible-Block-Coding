@@ -21,5 +21,6 @@ struct Block: Hashable, Codable, Identifiable {
         case count = "Count"
         case degrees = "Degrees"
         case colors = "Colors"
+		case dropped = "Dropped"
     }
 }
