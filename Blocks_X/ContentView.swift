@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+	@EnvironmentObject var pickerMovement: UserSettings
+	
 	@State private var activeCommands: [[Int]] = Array(repeating: Array(repeating: 6, count: 6), count: 5)
 	@State private var commandList = [Int] (repeating: 0, count: 6)
 	@State private var commandFrames = [CGRect](repeating: .zero, count: 30)

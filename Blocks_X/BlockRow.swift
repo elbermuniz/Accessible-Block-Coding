@@ -15,6 +15,7 @@ enum DragState{
 }
 
 struct BlockRow: View {
+	@EnvironmentObject var pickerMovement: UserSettings
 	@State private var dragState = DragState.unknown
 	@State private var dragAmount = CGSize.zero
 	

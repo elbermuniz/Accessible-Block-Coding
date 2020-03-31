@@ -9,14 +9,15 @@
 import SwiftUI
 
 struct PickerView: View {
+	@EnvironmentObject var pickerMovement: UserSettings
+	
 	var pickerImageVar: String
 	init(pickerImageVar: String) {
 		self.pickerImageVar = pickerImageVar
 		UITableView.appearance().separatorColor = .clear
 	}
-	var inputArray = ["01","02","03","04","05","06","07","08","09","10"]
-	@State var slectedSegmant = "ActionSheet"
-	@State var slectedObj = "04"
+	let inputArray = ["01","02","03","04","05","06","07","08","09","10"]
+	@State var slectedObj = 0
 	@State var enableSheet = false
 	var test = false
 	var body: some View {
@@ -57,26 +58,22 @@ struct PickerView: View {
 								.padding(.top, 5)
 								.foregroundColor(.black)
 							Picker("test", selection: self.$slectedObj) {
-											Text("1").id("01")
-											Text("2").id("02")
-											Text("3").id("03")
-											Text("4").id("04")
-											Text("5").id("05")
-											Text("6").id("06")
-											Text("7").id("07")
-											Text("8").id("08")
-											Text("9").id("09")
-											Text("10").id("10")
-
+								ForEach(0 ..< self.inputArray.count) {
+									Text(self.inputArray[$0]).tag($0)
+								}
 							}
 							.foregroundColor(.black)
 							.labelsHidden()
+//							.onReceive([self.slectedObj].publisher.first()) { (value) in
+//								print(value)}
 						}.background(RoundedRectangle(cornerRadius: 10)
 							.foregroundColor(Color.white).shadow(radius: 1))
 						VStack {
 							Button(action: {
 								debugPrint("Done Selected")
 								self.enableSheet = false
+								self.pickerMovement.value = self.slectedObj + 1
+								print(self.pickerMovement.value)
 							}) {
 								Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
 							}.padding()
