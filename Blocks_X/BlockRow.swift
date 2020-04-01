@@ -27,7 +27,27 @@ struct BlockRow: View {
 	var body: some View {
 		ZStack {
 			//createBlock(block: blockVar)
-			if(blockVar.color == "clear"){
+			if (blockVar.name == "Drop Area") {
+			ZStack {
+				Rectangle()
+					.foregroundColor(.gray)
+					//.padding()
+					.frame(width: 320, height: 150)
+					.overlay(
+						Rectangle()
+						//Capsule(style: .continuous)
+							.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 4, dash: [10]))
+					)
+				Text("Drag and drop commands into this area!")
+					.font(.headline)
+					.fontWeight(.light)
+					.foregroundColor(Color.white)
+					.multilineTextAlignment(.center)
+					.frame(width: 190.0)
+					.zIndex(5)
+					.frame(width:50, height: 200)
+				}
+			} else if(blockVar.color == "clear"){
 				ZStack {
 					Rectangle()
 						.foregroundColor(.clear)
@@ -38,21 +58,23 @@ struct BlockRow: View {
 								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
 						)
 				}
+				.frame(width:300)
 				.padding(.horizontal, 5)
 			} else if (blockVar.category.rawValue == "Dropped"){
 				ZStack {
 					Rectangle()
 						.cornerRadius(12)
 						.frame(width: 200, height: 70)
-						.zIndex(-10)
+						.zIndex(1)
 						.foregroundColor(blockColor(bColor: blockVar.color))
 					HStack {
 						Text(blockVar.name)
 							.foregroundColor(Color.black)
-							.zIndex(10)
+							.zIndex(1)
 						PickerView(pickerImageVar: blockVar.systemName)
 							.zIndex(100)
 							.frame(width: 30, height: 30)
+							.offset(y:-11)
 					}
 					.zIndex(100)
 					.frame(width: 200, height: 70)
@@ -72,6 +94,7 @@ struct BlockRow: View {
 						Image(systemName: blockVar.systemName)
 							.resizable()
 							.frame(width: 30, height: 30)
+							.foregroundColor(Color.black)
 					}
 					.zIndex(100)
 					.frame(width: 200, height: 70)
@@ -205,8 +228,10 @@ func blockColor(bColor: String) -> Color {
 struct BlockRow_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack{
+			BlockRow(blockVar: blockData[0], index: 0)
 			BlockRow(blockVar: blockData[6], index: 0)
 			BlockRow(blockVar: blockData[7], index: 0)
+			BlockRow(blockVar: blockData[13], index: 0)
 		}
 		.frame(width: 600, height: 600)
 		.background(Color.black)

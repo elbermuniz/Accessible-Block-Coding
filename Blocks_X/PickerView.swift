@@ -84,7 +84,6 @@ struct PickerView: View {
 						}
 					}
 					.frame(width: gr.size.width, height: gr.size.height)
-					.offset(y: 200)
 					.zIndex(100)
 				}
 			}
@@ -100,6 +99,22 @@ extension View {
 
 struct PickerView_Previews: PreviewProvider {
     static var previews: some View {
-		PickerView(pickerImageVar: blockData[0].systemName).background(Color.white)
+		ZStack {
+			Rectangle()
+				.cornerRadius(12)
+				.frame(width: 200, height: 70)
+				.zIndex(-10)
+				.foregroundColor(blockColor(bColor: blockData[0].color))
+			HStack {
+				Text(blockData[0].name)
+					.foregroundColor(Color.black)
+					.zIndex(10)
+				PickerView(pickerImageVar: blockData[0].systemName)
+					.zIndex(100)
+					.frame(width: 30, height: 30)
+			}
+			.zIndex(100)
+			.frame(width: 200, height: 70)
     }
+}
 }

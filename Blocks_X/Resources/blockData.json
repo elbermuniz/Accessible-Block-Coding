@@ -89,5 +89,12 @@
         "id": 12,
         "systemName": "paintbrush.fill",
 		"color": "yellow"
+    },
+    {
+        "name": "Drop Area",
+        "category": "Degrees",
+        "id": 13,
+        "systemName": "checkmark.seal.fill",
+		"color": "clear"
     }
 ]
