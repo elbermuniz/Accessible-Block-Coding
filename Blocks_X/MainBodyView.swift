@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainBodyView: View {
 	@State private var commandList = [Int] (repeating: 0, count: 6) //commands on the left
-	@State private var activeCommands = [Int] (repeating: 7, count: 15) // contains the actual blocks in list
+	@State private var activeCommands = [Int] (repeating: 6, count: 15) // contains the actual blocks in list
 	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
 	@State private var dropBlock = [Int] (repeating: 13, count: 1) // the value of the block where commands are dropped
 	@State private var dropArea = [CGRect](repeating: .zero, count: 1) // the frame of the area to drop commands
@@ -86,6 +86,7 @@ struct MainBodyView: View {
 //													}
 //												)
 										}
+										.padding(.vertical, 5)
 										.frame(width: 500)
 									}
 									.overlay(

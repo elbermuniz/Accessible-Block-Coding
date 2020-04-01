@@ -98,6 +98,7 @@ struct BlockRow: View {
 					}
 					.zIndex(100)
 					.frame(width: 200, height: 70)
+					.padding(.vertical, 5)
 					}
 						//Drag & Drop Functionality
 						.offset(dragAmount)
