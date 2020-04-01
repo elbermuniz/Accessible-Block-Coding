@@ -10,7 +10,7 @@ import SwiftUI
 
 struct MainBodyView: View {
 	@State private var commandList = [Int] (repeating: 0, count: 6) //commands on the left
-	@State private var activeCommands = [Int] (repeating: 6, count: 15) // contains the actual blocks in list
+	@State private var activeCommands = [Int] (repeating: 6, count: 30) // contains the actual blocks in list
 	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
 	@State private var dropBlock = [Int] (repeating: 13, count: 1) // the value of the block where commands are dropped
 	@State private var dropArea = [CGRect](repeating: .zero, count: 1) // the frame of the area to drop commands
@@ -41,7 +41,7 @@ struct MainBodyView: View {
 						.background(Color.blue)
 						.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width)
 						
-						Spacer()
+//						Spacer()
 						
 						//Comands are created on left side
 						VStack {
@@ -75,7 +75,7 @@ struct MainBodyView: View {
 							VStack {
 								VStack {
 									ScrollView(.vertical) {
-										ForEach(0..<15){ number in
+										ForEach(0..<30){ number in
 											BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
 //												.overlay(
 //													GeometryReader { geos in
@@ -96,20 +96,19 @@ struct MainBodyView: View {
 													self.commandFrames[0] = geos.frame(in: .global)
 											}
 										}
-									)
+                                    )
 								}
 								.frame(minWidth: 0, maxWidth: geo.size.width / 3, minHeight: 0, maxHeight: geo.size.height * (0.8))
 									.allowsHitTesting(false)
 									.foregroundColor(Color.white)
 									.padding(.top, 15)
-									.padding(.horizontal, 40)
+                                .padding(.horizontal, 40)
 								
 								//.offset(y: -geo.size.height * (0.1))
 								.zIndex(3)
-								
+                                Divider().background(Color.white)
 								Spacer()
 
-//									.frame(width:200, height: 200)
 								BlockRow(blockVar: blockData[13], onChanged: self.commandMoved, index: 0)
 									.overlay(
 										GeometryReader { geos in
@@ -165,7 +164,7 @@ struct MainBodyView: View {
 									//Spacer()
 									Button(action: {
 										print("Trash tapped!")
-										self.activeCommands = [Int] (repeating: 6, count: 15)
+										self.activeCommands = [Int] (repeating: 6, count: 30)
 										self.count = 0
 										//self.activeCommands = [[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6]]
 									}) {
@@ -242,7 +241,7 @@ struct MainBodyView: View {
 //
 //			commandList[blockIndex] = block.id
 //		} else
-			if count < 15 {
+			if count < 30 {
 			activeCommands[count] = block.id + 7
 			
 			commandList[blockIndex] = block.id
@@ -267,7 +266,7 @@ struct MainBodyView: View {
 			}
 		} else if let dropMatch = dropArea.firstIndex(where: {$0.contains(location)}){
 			if(dropBlock[dropMatch] == 13) {
-				if count < 15 {
+				if count < 30 {
 					if activeCommands[count] != 6 {
 							print(dropMatch)
 							print(dropBlock[dropMatch])

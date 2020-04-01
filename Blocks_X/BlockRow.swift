@@ -31,7 +31,6 @@ struct BlockRow: View {
 			ZStack {
 				Rectangle()
 					.foregroundColor(.gray)
-					//.padding()
 					.frame(width: 320, height: 150)
 					.overlay(
 						Rectangle()
@@ -52,11 +51,11 @@ struct BlockRow: View {
 					Rectangle()
 						.foregroundColor(.clear)
 						.padding()
-						.frame(width: 190, height: 70)
-						.overlay(
-							Capsule(style: .continuous)
-								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
-						)
+						.frame(width: 320, height: 50)
+//						.overlay(
+//							Capsule(style: .continuous)
+//								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
+//						)
 				}
 				.frame(width:300)
 				.padding(.horizontal, 5)
@@ -64,7 +63,7 @@ struct BlockRow: View {
 				ZStack {
 					Rectangle()
 						.cornerRadius(12)
-						.frame(width: 200, height: 70)
+						.frame(width: 320, height: 50)
 						.zIndex(1)
 						.foregroundColor(blockColor(bColor: blockVar.color))
 					HStack {
@@ -77,7 +76,7 @@ struct BlockRow: View {
 							.offset(y:-11)
 					}
 					.zIndex(100)
-					.frame(width: 200, height: 70)
+					.frame(width: 320, height: 50)
 					}
 			} else {
 				ZStack {
