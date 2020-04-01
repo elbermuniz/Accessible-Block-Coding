@@ -41,7 +41,7 @@ struct MainBodyView: View {
 						.background(Color.blue)
 						.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width)
 						
-						Spacer()
+//						Spacer()
 						
 						//Comands are created on left side
 						VStack {
