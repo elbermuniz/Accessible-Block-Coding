@@ -9,12 +9,16 @@
 import SwiftUI
 
 struct MainBodyView: View {
+	@EnvironmentObject var pickerMovement: UserSettings
+
 	@State private var commandList = [Int] (repeating: 0, count: 6) //commands on the left
-	@State private var activeCommands = [Int] (repeating: 6, count: 30) // contains the actual blocks in list
-	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
+//	@State private var activeCommands = [Int] (repeating: 6, count: 30) // contains the actual blocks in list
+//	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
 	@State private var dropBlock = [Int] (repeating: 13, count: 1) // the value of the block where commands are dropped
 	@State private var dropArea = [CGRect](repeating: .zero, count: 1) // the frame of the area to drop commands
-	@State private var count = 0 // keeps track of which block has been filled in the list
+//	@State public var count = 0 // keeps track of which block has been filled in the list
+	@State private var enablePicker = false
+	
 	
 	var body: some View {
 		GeometryReader { geometry in
@@ -46,7 +50,7 @@ struct MainBodyView: View {
 						//Comands are created on left side
 						VStack {
 							ForEach(0..<6){ number in
-								BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number)
+								BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
 							}
 							.padding(-3.5)
 							.zIndex(30)
@@ -76,15 +80,7 @@ struct MainBodyView: View {
 								VStack {
 									ScrollView(.vertical) {
 										ForEach(0..<30){ number in
-											BlockRow(blockVar: blockData[self.activeCommands[number]], onChanged: self.commandMoved, index: number)
-//												.overlay(
-//													GeometryReader { geos in
-//														Color.clear
-//															.onAppear{
-//																self.commandFrames[number] = geos.frame(in: .global)
-//														}
-//													}
-//												)
+											BlockRow(blockVar: blockData[self.pickerMovement.activeCommands[number].0], onChanged: self.commandMoved, index: number, newMovement: self.pickerMovement.activeCommands[number].1)
 										}
 										.padding(.vertical, 5)
 										.frame(width: 500)
@@ -93,7 +89,7 @@ struct MainBodyView: View {
 										GeometryReader { geos in
 											Color.clear
 												.onAppear{
-													self.commandFrames[0] = geos.frame(in: .global)
+													self.pickerMovement.commandFrames[0] = geos.frame(in: .global)
 											}
 										}
                                     )
@@ -102,22 +98,25 @@ struct MainBodyView: View {
 									.allowsHitTesting(false)
 									.foregroundColor(Color.white)
 									.padding(.top, 15)
-                                .padding(.horizontal, 40)
+									.padding(.horizontal, 40)
 								
-								//.offset(y: -geo.size.height * (0.1))
 								.zIndex(3)
                                 Divider().background(Color.white)
 								Spacer()
 
-								BlockRow(blockVar: blockData[13], onChanged: self.commandMoved, index: 0)
+								BlockRow(blockVar: blockData[13], onChanged: self.commandMoved, index: 0, newMovement: 0)
 									.overlay(
 										GeometryReader { geos in
 											Color.clear
+												.inputPicker(state: self.$enablePicker)
 												.onAppear{
 													self.dropArea[0] = geos.frame(in: .global)
 											}
 										}
-									)
+								)
+								.zIndex(4)
+								
+								
 							}
 							.zIndex(1)
 							
@@ -164,9 +163,8 @@ struct MainBodyView: View {
 									//Spacer()
 									Button(action: {
 										print("Trash tapped!")
-										self.activeCommands = [Int] (repeating: 6, count: 30)
-										self.count = 0
-										//self.activeCommands = [[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6],[6,6,6,6,6,6]]
+										self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
+										self.pickerMovement.count = 0
 									}) {
 										VStack {
 											Image(systemName: "trash")
@@ -224,8 +222,8 @@ struct MainBodyView: View {
 	}
 	
 	func increaseCount() {
-		print("Build count: ", count)
-		count = count+1
+		print("Build count: ", pickerMovement.count)
+		pickerMovement.count = pickerMovement.count+1
 	}
 	
 	func startApp() {
@@ -234,30 +232,19 @@ struct MainBodyView: View {
 	}
 	
 	func commandDropped(location: CGPoint, blockIndex: Int, block: Block) {
-//		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-//
-//			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[match])
-//			activeCommands[match] = block.id + 7
-//
-//			commandList[blockIndex] = block.id
-//		} else
-			if count < 30 {
-			activeCommands[count] = block.id + 7
-			
+		if pickerMovement.count < 30 {
+			enablePicker = true
+			//print(enablePicker)
+			pickerMovement.activeCommands[pickerMovement.count].0 = block.id + 7
 			commandList[blockIndex] = block.id
+			increaseCount()
 			
-			self.increaseCount()
 		}
 	}
-	
 	func commandMoved(location: CGPoint, block: Block) -> DragState {
 		//print(location)
-		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			if activeCommands[match] != 13 {
-//				print(match)
-//				print(activeCommands[match])
-//				print(commandFrames)
-				//	print("this is bad: ", activeCommands[match])
+		if let match = pickerMovement.commandFrames.firstIndex(where: {$0.contains(location)}){
+			if pickerMovement.activeCommands[match].0 != 13 {
 				return .bad
 			}
 			else {
@@ -266,28 +253,93 @@ struct MainBodyView: View {
 			}
 		} else if let dropMatch = dropArea.firstIndex(where: {$0.contains(location)}){
 			if(dropBlock[dropMatch] == 13) {
-				if count < 30 {
-					if activeCommands[count] != 6 {
-							print(dropMatch)
-							print(dropBlock[dropMatch])
-							print(dropArea)
+				if pickerMovement.count < 30 {
+					if pickerMovement.activeCommands[pickerMovement.count].0 != 6 {
 							return .bad
 						} else {
-							print(dropMatch)
-							print(dropBlock[dropMatch])
-							print(dropArea)
 							return .good
 						}
 				} else {
 					return .bad
 				}
 			} else {
+				print("here")
 				return .unknown
 			}
 		} else {
 			return .unknown
 		}
 	}
+}
+
+struct blockPicker: ViewModifier {
+	@EnvironmentObject var pickerMovement: UserSettings
+	@Binding var state: Bool
+
+	let inputArray = ["01","02","03","04","05","06","07","08","09","10"]
+	@State var slectedObj = 0
+
+    func body(content: Content) -> some View {
+		ZStack {
+			VStack() {
+				Text("")
+					.hidden()
+			}.blur(radius: $state.wrappedValue ? 1 : 0)
+				.overlay(
+					$state.wrappedValue ? Color.black.opacity(0.6) : nil
+			)
+		   if $state.wrappedValue {
+				GeometryReader { gr in
+					VStack {
+						VStack {
+							Text("PickerView")
+								.font(.headline)
+								.foregroundColor(.gray)
+								.padding(.top, 10)
+							Text("Choose Value")
+								.padding(.top, 5)
+								.foregroundColor(.black)
+							Picker("test", selection: self.$slectedObj) {
+								ForEach(0 ..< self.inputArray.count) {
+									Text(self.inputArray[$0]).tag($0)
+								}
+							}
+							.foregroundColor(.black)
+							.labelsHidden()
+//							.onReceive([self.slectedObj].publisher.first()) { (value) in
+//								print(value)}
+						}.background(RoundedRectangle(cornerRadius: 10)
+							.foregroundColor(Color.white).shadow(radius: 1))
+						VStack {
+							Button(action: {
+								debugPrint("Done Selected")
+								self.state = false
+								self.pickerMovement.value = self.slectedObj + 1
+								
+								self.pickerMovement.activeCommands[self.pickerMovement.count - 1].1 = self.pickerMovement.value
+								self.pickerMovement.value = 0	
+							}) {
+								Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
+							}.padding()
+								.frame(maxWidth: 600)
+								.background(RoundedRectangle(cornerRadius: 10)
+								.foregroundColor(Color.white).shadow(radius: 1))
+
+						}
+					}
+					.frame(width: gr.size.width, height: gr.size.height)
+					.zIndex(100)
+					.offset(y:-300)
+				}
+			}
+		}.edgesIgnoringSafeArea(.all)
+    }
+}
+
+extension View {
+    func inputPicker(state: Binding<Bool>) -> some View {
+		self.modifier(blockPicker(state: state))
+    }
 }
 
 struct MainBodyView_Previews: PreviewProvider {

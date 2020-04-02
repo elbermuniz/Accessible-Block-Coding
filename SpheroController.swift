@@ -288,7 +288,7 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
     }
        
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
-           print("Failed: \(error)")
+		print("Failed: \(String(describing: error))")
     }
     
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {

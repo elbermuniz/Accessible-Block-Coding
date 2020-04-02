@@ -16,11 +16,17 @@ struct Block: Hashable, Codable, Identifiable {
     var category: Category
 	var systemName: String
 	var color: String
-
+	var input: Input
+	
     enum Category: String, CaseIterable, Codable, Hashable {
-        case count = "Count"
-        case degrees = "Degrees"
-        case colors = "Colors"
+		case normal = "Normal"
 		case dropped = "Dropped"
     }
+	
+	enum Input: String, CaseIterable, Codable, Hashable {
+		case degrees = "Degrees"
+		case unit = "Units"
+		case colors = "Colors"
+		case none = "None"
+	}
 }
