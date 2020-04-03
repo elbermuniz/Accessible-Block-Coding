@@ -18,12 +18,16 @@ struct MainHeaderView: View {
 						.padding(.leading)
 					
 					Text("BlockX")
+						.font(.headline)
+						.fontWeight(.heavy)
 				}
 				.foregroundColor(.blue)
 				
 				Spacer()
 				Spacer()
 				Text("Welcome!")
+					.font(.title)
+					.fontWeight(.heavy)
 					.multilineTextAlignment(.center)
 					.padding(.vertical, 10.0)
 				Spacer()
