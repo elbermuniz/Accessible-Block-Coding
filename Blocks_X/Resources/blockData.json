@@ -1,100 +1,114 @@
 [
     {
         "name": "Move Forward",
-        "category": "Count",
+        "category": "Normal",
         "id": 0,
         "systemName": "arrow.up.circle",
-		"color": "blue"
+		"color": "blue",
+		"input": "Units"
     },
     {
         "name": "Move Backward",
-        "category": "Count",
+        "category": "Normal",
         "id": 1,
         "systemName": "arrow.down.circle",
-		"color": "green"
+		"color": "green",
+		"input": "Units"
     },
     {
         "name": "Turn Right",
-        "category": "Degrees",
+        "category": "Normal",
         "id": 2,
         "systemName": "arrow.right.circle",
-		"color": "purple"
+		"color": "purple",
+		"input": "Degrees"
     },
     {
         "name": "Turn Left",
-        "category": "Degrees",
+        "category": "Normal",
         "id": 3,
         "systemName": "arrow.left.circle",
-		"color": "orange"
+		"color": "orange",
+		"input": "Degrees"
     },
     {
         "name": "Stop",
-        "category": "Count",
+        "category": "Normal",
         "id": 4,
         "systemName": "stop.circle",
-		"color": "red"
+		"color": "red",
+		"input": "None"
     },
     {
         "name": "Set Color To:",
-        "category": "Degrees",
+        "category": "Normal",
         "id": 5,
         "systemName": "paintbrush.fill",
-		"color": "yellow"
+		"color": "yellow",
+		"input": "Colors"
     },
     {
         "name": "",
-        "category": "Degrees",
+        "category": "Normal",
         "id": 6,
         "systemName": "",
-		"color": "clear"
+		"color": "clear",
+		"input": "None"
     },
     {
         "name": "Move Forward",
         "category": "Dropped",
         "id": 7,
         "systemName": "arrow.up.circle",
-		"color": "blue"
+		"color": "blue",
+		"input": "Units"
     },
     {
         "name": "Move Backward",
         "category": "Dropped",
         "id": 8,
         "systemName": "arrow.down.circle",
-		"color": "green"
+		"color": "green",
+		"input": "Units"
     },
     {
         "name": "Turn Right",
         "category": "Dropped",
         "id": 9,
         "systemName": "arrow.right.circle",
-		"color": "purple"
+		"color": "purple",
+		"input": "Degrees"
     },
     {
         "name": "Turn Left",
         "category": "Dropped",
         "id": 10,
         "systemName": "arrow.left.circle",
-		"color": "orange"
+		"color": "orange",
+		"input": "Degrees"
     },
     {
         "name": "Stop",
         "category": "Dropped",
         "id": 11,
         "systemName": "stop.circle",
-		"color": "red"
+		"color": "red",
+		"input": "None"
     },
     {
         "name": "Set Color To:",
         "category": "Dropped",
         "id": 12,
         "systemName": "paintbrush.fill",
-		"color": "yellow"
+		"color": "yellow",
+		"input": "Colors"
     },
     {
         "name": "Drop Area",
-        "category": "Degrees",
+        "category": "Normal",
         "id": 13,
         "systemName": "checkmark.seal.fill",
-		"color": "clear"
+		"color": "clear",
+		"input": "None"
     }
 ]

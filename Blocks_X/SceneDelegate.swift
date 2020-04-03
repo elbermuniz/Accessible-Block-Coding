@@ -11,6 +11,9 @@ import SwiftUI
 
 class UserSettings: ObservableObject {
 	@Published var value = 0
+	@Published var activeCommands = [(Int, Int)] (repeating: (6,0), count: 30) // contains the actual blocks in list
+	@Published var commandFrames = [CGRect](repeating: .zero, count: 1) //( the frame of the list area
+	@Published var count = 0 // keeps track of which block has been filled in the list
 }
 
 
