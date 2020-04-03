@@ -24,10 +24,9 @@ struct BlockRow: View {
 	var onEnded: ((CGPoint, Int, Block) -> Void)?
 	var index: Int
 	var newMovement: Int
-
+	
 	var body: some View {
 		ZStack {
-			//createBlock(block: blockVar)
 			if (blockVar.name == "Drop Area") {
 				ZStack {
 					Rectangle()
@@ -35,15 +34,14 @@ struct BlockRow: View {
 						.frame(width: 320, height: 150)
 						.overlay(
 							Rectangle()
-							//Capsule(style: .continuous)
 								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 4, dash: [10]))
-						)
+					)
 					Text("Drag and drop commands into this area!")
-						.font(.headline)
-						.fontWeight(.light)
+						.font(.title)
+						.fontWeight(.heavy)
 						.foregroundColor(Color.white)
 						.multilineTextAlignment(.center)
-						.frame(width: 190.0)
+						.frame(width: 200.0)
 						.zIndex(5)
 						.frame(width:50, height: 200)
 				}
@@ -53,10 +51,6 @@ struct BlockRow: View {
 						.foregroundColor(.clear)
 						.padding()
 						.frame(width: 320, height: 50)
-//						.overlay(
-//							Capsule(style: .continuous)
-//								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
-//						)
 				}
 				.frame(width:300)
 				.padding(.horizontal, 5)
@@ -71,23 +65,31 @@ struct BlockRow: View {
 							.zIndex(1)
 							.foregroundColor(blockColor(bColor: blockVar.color))
 						HStack {
-						if (blockVar.input.rawValue == "Units") {
-							Text(blockVar.name + " " + String(newMovement) + " Times")
-								.foregroundColor(Color.white)
-								.zIndex(1)
-						} else if (blockVar.input.rawValue == "Degrees") {
-							Text(blockVar.name + " " + String(newMovement) + " Degrees")
-								.foregroundColor(Color.white)
-								.zIndex(1)
-						} else if (blockVar.input.rawValue == "Colors"){
-							Text(blockVar.name + " " + String(newMovement) + " Color")
-								.foregroundColor(Color.white)
-								.zIndex(1)
-						} else {
-							Text(blockVar.name)
-								.foregroundColor(Color.white)
-								.zIndex(1)
-						}
+							if (blockVar.input.rawValue == "Units") {
+								Text(blockVar.name + " " + String(newMovement) + " Times")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else if (blockVar.input.rawValue == "Degrees") {
+								Text(blockVar.name + " " + String(newMovement) + " Degrees")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else if (blockVar.input.rawValue == "Colors"){
+								Text(blockVar.name + " " + String(newMovement) + " Color")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else {
+								Text(blockVar.name)
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							}
 							Image(systemName: blockVar.systemName)
 								.resizable()
 								.frame(width: 30, height: 30)
@@ -106,6 +108,8 @@ struct BlockRow: View {
 						.foregroundColor(blockColor(bColor: blockVar.color))
 					HStack {
 						Text(blockVar.name)
+							.font(.headline)
+							.fontWeight(.heavy)
 							.foregroundColor(Color.white)
 							.zIndex(10)
 						//Image Instead
@@ -118,23 +122,22 @@ struct BlockRow: View {
 					.frame(width: 200, height: 70)
 					.padding(.vertical, 5)
 				}
-				//Drag & Drop Functionality
-				.offset(dragAmount)
-				//.zIndex(dragAmount == .zero ? 0 : 30) // TODO: Figure out why block goes behind
-				.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-				.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-				.gesture(DragGesture(coordinateSpace: .global)
-					.onChanged { value in
-						self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
-						self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
+					//Drag & Drop Functionality
+					.offset(dragAmount)
+					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
+					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
+					.gesture(DragGesture(coordinateSpace: .global)
+						.onChanged { value in
+							self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
+							self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
 					}
 					.onEnded {
 						if(self.dragState == .good){
 							self.onEnded?($0.location, self.index, self.blockVar)
 						}
 						self.dragAmount = .zero
-					}
-				)//.zIndex(dragAmount == .zero ? 0 : 1)
+						}
+				)
 			}
 		}
 	}
@@ -188,7 +191,7 @@ struct BlockRow_Previews: PreviewProvider {
 		VStack{
 			BlockRow(blockVar: blockData[0], index: 0, newMovement: 1)
 			BlockRow(blockVar: blockData[6], index: 0, newMovement: 1)
-			BlockRow(blockVar: blockData[7], index: 0, newMovement: 1)
+			BlockRow(blockVar: blockData[11], index: 0, newMovement: 1)
 			BlockRow(blockVar: blockData[13], index: 0, newMovement: 1)
 		}
 		.frame(width: 600, height: 600)

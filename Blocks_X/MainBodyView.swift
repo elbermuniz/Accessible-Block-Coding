@@ -10,14 +10,16 @@ import SwiftUI
 
 struct MainBodyView: View {
 	@EnvironmentObject var pickerMovement: UserSettings
-
+	
 	@State private var commandList = [Int] (repeating: 0, count: 6) //commands on the left
-//	@State private var activeCommands = [Int] (repeating: 6, count: 30) // contains the actual blocks in list
-//	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
+	//	@State private var activeCommands = [Int] (repeating: 6, count: 30) // contains the actual blocks in list
+	//	@State private var commandFrames = [CGRect](repeating: .zero, count: 1) // the frame of the list area
 	@State private var dropBlock = [Int] (repeating: 13, count: 1) // the value of the block where commands are dropped
 	@State private var dropArea = [CGRect](repeating: .zero, count: 1) // the frame of the area to drop commands
-//	@State public var count = 0 // keeps track of which block has been filled in the list
-	@State private var enablePicker = false
+	//	@State public var count = 0 // keeps track of which block has been filled in the list
+	@State private var enableMovementPicker = false
+	@State private var enableDegreePicker = false
+	@State private var enableColorPicker = false
 	
 	
 	var body: some View {
@@ -30,7 +32,7 @@ struct MainBodyView: View {
 						HStack {
 							Text("CODE")
 								.font(.headline)
-								.fontWeight(.semibold)
+								.fontWeight(.bold)
 								.multilineTextAlignment(.leading)
 								.padding([.top, .leading, .bottom])
 								.foregroundColor(.white)
@@ -45,8 +47,6 @@ struct MainBodyView: View {
 						.background(Color.blue)
 						.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width)
 						
-//						Spacer()
-						
 						//Comands are created on left side
 						VStack {
 							ForEach(0..<6){ number in
@@ -57,9 +57,7 @@ struct MainBodyView: View {
 						}
 						.zIndex(30)
 						.frame(width: 250, height: 525)
-						
-						//SliderView().offset(y:-20)
-						
+												
 						Spacer()
 					}
 					.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width, minHeight: geo.size.height * (0.25), maxHeight: geo.size.height)
@@ -92,31 +90,29 @@ struct MainBodyView: View {
 													self.pickerMovement.commandFrames[0] = geos.frame(in: .global)
 											}
 										}
-                                    )
+									)
 								}
 								.frame(minWidth: 0, maxWidth: geo.size.width / 3, minHeight: 0, maxHeight: geo.size.height * (0.8))
-									.allowsHitTesting(false)
-									.foregroundColor(Color.white)
-									.padding(.top, 15)
-									.padding(.horizontal, 40)
-								
+								.allowsHitTesting(false)
+								.foregroundColor(Color.white)
+								.padding(.top, 15)
+								.padding(.horizontal, 40)
+									
 								.zIndex(3)
-                                Divider().background(Color.white)
+								Divider().background(Color.white)
 								Spacer()
-
+								
 								BlockRow(blockVar: blockData[13], onChanged: self.commandMoved, index: 0, newMovement: 0)
 									.overlay(
 										GeometryReader { geos in
 											Color.clear
-												.inputPicker(state: self.$enablePicker)
+												.inputPicker(movementState: self.$enableMovementPicker, degreeState: self.$enableDegreePicker, colorState: self.$enableColorPicker)
 												.onAppear{
 													self.dropArea[0] = geos.frame(in: .global)
 											}
 										}
 								)
-								.zIndex(4)
-								
-								
+									.zIndex(4)
 							}
 							.zIndex(1)
 							
@@ -156,11 +152,10 @@ struct MainBodyView: View {
 									}
 								}
 								.padding([.top, .trailing], 20)
-
+								
 								Spacer()
 								
 								HStack(spacing: 0.0) {
-									//Spacer()
 									Button(action: {
 										print("Trash tapped!")
 										self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
@@ -180,6 +175,7 @@ struct MainBodyView: View {
 									
 									Button(action: {
 										print("Play tapped!")
+										self.playCommands()
 									}) {
 										VStack {
 											Image(systemName: "play.circle")
@@ -195,16 +191,12 @@ struct MainBodyView: View {
 									}
 								}
 								.padding([.bottom, .trailing], 20)
-
-									//.padding(.trailing, 10)
-									//.offset(x: geo.size.width * (0.75), y: geo.size.height * (0.89))
 							}
-						.zIndex(-1)
+							.zIndex(-1)
 						}
 						.frame(minWidth: geo.size.width, maxWidth: geo.size.width, minHeight: 0, maxHeight: geo.size.height).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
 						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
 						.zIndex(0)
-						//.offset(y:geo.size.height/6)
 					}
 					// Bottom row of buttons
 					
@@ -221,6 +213,16 @@ struct MainBodyView: View {
 		}
 	}
 	
+	func playCommands() {
+		for value in 0..<30 {
+			if(pickerMovement.activeCommands[value].0 != 6 || pickerMovement.activeCommands[value].0 != 11){
+				print(pickerMovement.activeCommands[value].1)
+			}
+		}
+		self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
+		self.pickerMovement.count = 0
+	}
+	
 	func increaseCount() {
 		print("Build count: ", pickerMovement.count)
 		pickerMovement.count = pickerMovement.count+1
@@ -232,13 +234,28 @@ struct MainBodyView: View {
 	}
 	
 	func commandDropped(location: CGPoint, blockIndex: Int, block: Block) {
+		let newBlockID = block.id + 7
+		
 		if pickerMovement.count < 30 {
-			enablePicker = true
-			//print(enablePicker)
-			pickerMovement.activeCommands[pickerMovement.count].0 = block.id + 7
+			if(newBlockID == 7 || newBlockID == 8){
+				enableMovementPicker = true
+			} else if (newBlockID == 9 || newBlockID == 10) {
+				enableDegreePicker = true
+			} else if (newBlockID == 12) {
+				enableColorPicker = true
+			} else {
+				enableDegreePicker = false
+				enableMovementPicker = false
+				enableColorPicker = false
+			}
+			pickerMovement.activeCommands[pickerMovement.count].0 = newBlockID
 			commandList[blockIndex] = block.id
-			increaseCount()
 			
+			if(newBlockID == 11){
+				self.pickerMovement.activeCommands[self.pickerMovement.count].1 = 1
+			}
+			
+			increaseCount()
 		}
 	}
 	func commandMoved(location: CGPoint, block: Block) -> DragState {
@@ -248,17 +265,16 @@ struct MainBodyView: View {
 				return .bad
 			}
 			else {
-				//	print("this is good: ", activeCommands[match])
 				return .good
 			}
 		} else if let dropMatch = dropArea.firstIndex(where: {$0.contains(location)}){
 			if(dropBlock[dropMatch] == 13) {
 				if pickerMovement.count < 30 {
 					if pickerMovement.activeCommands[pickerMovement.count].0 != 6 {
-							return .bad
-						} else {
-							return .good
-						}
+						return .bad
+					} else {
+						return .good
+					}
 				} else {
 					return .bad
 				}
@@ -272,74 +288,182 @@ struct MainBodyView: View {
 	}
 }
 
+// Handles the 3 different types of pickers used when a command is dropped
 struct blockPicker: ViewModifier {
 	@EnvironmentObject var pickerMovement: UserSettings
-	@Binding var state: Bool
-
-	let inputArray = ["01","02","03","04","05","06","07","08","09","10"]
+	//@Binding var state: Bool
+	@Binding var movementState: Bool
+	@Binding var degreeState: Bool
+	@Binding var colorState: Bool
+	
+	let inputArray = Array(1...100)
+	let degreeArray: [Int] = [15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
+	let colorArray = Array(0...5) //["Red", "Blue", "Green", "Yellow", "Purple", "Orange"] <- these are the color values
+	let colors = ["Red", "Blue", "Green", "Yellow", "Purple", "Orange"]
 	@State var slectedObj = 0
-
-    func body(content: Content) -> some View {
+	
+	func body(content: Content) -> some View {
 		ZStack {
-			VStack() {
-				Text("")
-					.hidden()
-			}.blur(radius: $state.wrappedValue ? 1 : 0)
-				.overlay(
-					$state.wrappedValue ? Color.black.opacity(0.6) : nil
-			)
-		   if $state.wrappedValue {
-				GeometryReader { gr in
-					VStack {
+			if(movementState){ // if a command is dropped which uses distances
+				VStack() {
+					Text("")
+						.hidden()
+				}.blur(radius: $movementState.wrappedValue ? 1 : 0)
+					.overlay(
+						$movementState.wrappedValue ? Color.black.opacity(0.6) : nil
+				)
+				if $movementState.wrappedValue {
+					GeometryReader { gr in
 						VStack {
-							Text("PickerView")
-								.font(.headline)
-								.foregroundColor(.gray)
-								.padding(.top, 10)
-							Text("Choose Value")
-								.padding(.top, 5)
-								.foregroundColor(.black)
-							Picker("test", selection: self.$slectedObj) {
-								ForEach(0 ..< self.inputArray.count) {
-									Text(self.inputArray[$0]).tag($0)
+							VStack {
+								Text("Units")
+									.font(.headline)
+									.foregroundColor(.gray)
+									.padding(.top, 10)
+								Text("Choose Distance")
+									.padding(.top, 5)
+									.foregroundColor(.black)
+								Picker("test", selection: self.$slectedObj) {
+									ForEach(0 ..< self.inputArray.count) {
+										Text(String(self.inputArray[$0])).tag($0)
+									}
 								}
-							}
-							.foregroundColor(.black)
-							.labelsHidden()
-//							.onReceive([self.slectedObj].publisher.first()) { (value) in
-//								print(value)}
-						}.background(RoundedRectangle(cornerRadius: 10)
-							.foregroundColor(Color.white).shadow(radius: 1))
-						VStack {
-							Button(action: {
-								debugPrint("Done Selected")
-								self.state = false
-								self.pickerMovement.value = self.slectedObj + 1
-								
-								self.pickerMovement.activeCommands[self.pickerMovement.count - 1].1 = self.pickerMovement.value
-								self.pickerMovement.value = 0	
-							}) {
-								Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
-							}.padding()
-								.frame(maxWidth: 600)
-								.background(RoundedRectangle(cornerRadius: 10)
+								.foregroundColor(.black)
+								.labelsHidden()
+							}.background(RoundedRectangle(cornerRadius: 10)
 								.foregroundColor(Color.white).shadow(radius: 1))
-
+							VStack {
+								Button(action: {
+									debugPrint("Done Selected")
+									self.movementState = false
+									
+									self.pickerMovement.value = self.slectedObj + 1
+									self.pickerMovement.activeCommands[self.pickerMovement.count - 1].1 = self.pickerMovement.value
+									self.pickerMovement.value = 0
+								}) {
+									Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
+								}.padding()
+									.frame(maxWidth: 600)
+									.background(RoundedRectangle(cornerRadius: 10)
+										.foregroundColor(Color.white).shadow(radius: 1))
+								
+							}
 						}
+						.frame(width: gr.size.width, height: gr.size.height)
+						.zIndex(100)
+						.offset(y:-300)
 					}
-					.frame(width: gr.size.width, height: gr.size.height)
-					.zIndex(100)
-					.offset(y:-300)
+				}
+			} else if (degreeState){ // if a command is dropped which uses degrees
+				VStack() {
+					Text("")
+						.hidden()
+				}.blur(radius: $degreeState.wrappedValue ? 1 : 0)
+					.overlay(
+						$degreeState.wrappedValue ? Color.black.opacity(0.6) : nil
+				)
+				if $degreeState.wrappedValue {
+					GeometryReader { gr in
+						VStack {
+							VStack {
+								Text("Degrees")
+									.font(.headline)
+									.foregroundColor(.gray)
+									.padding(.top, 10)
+								Text("Choose Value")
+									.padding(.top, 5)
+									.foregroundColor(.black)
+								Picker("test", selection: self.$slectedObj) {
+									ForEach(0 ..< self.degreeArray.count) {
+										Text(String(self.degreeArray[$0])).tag($0)
+									}
+								}
+								.foregroundColor(.black)
+								.labelsHidden()
+							}.background(RoundedRectangle(cornerRadius: 10)
+								.foregroundColor(Color.white).shadow(radius: 1))
+							VStack {
+								Button(action: {
+									debugPrint("Done Selected")
+									self.degreeState = false
+									self.pickerMovement.value = self.slectedObj + 1
+									
+									self.pickerMovement.activeCommands[self.pickerMovement.count - 1].1 = self.pickerMovement.value * 15
+									self.pickerMovement.value = 0
+								}) {
+									Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
+								}.padding()
+									.frame(maxWidth: 600)
+									.background(RoundedRectangle(cornerRadius: 10)
+										.foregroundColor(Color.white).shadow(radius: 1))
+								
+							}
+						}
+						.frame(width: gr.size.width, height: gr.size.height)
+						.zIndex(100)
+						.offset(y:-300)
+					}
+				}
+			} else if (colorState){ // if a command is dropped which uses colors
+				VStack() {
+					Text("")
+						.hidden()
+				}.blur(radius: $colorState.wrappedValue ? 1 : 0)
+					.overlay(
+						$colorState.wrappedValue ? Color.black.opacity(0.6) : nil
+				)
+				if $colorState.wrappedValue {
+					GeometryReader { gr in
+						VStack {
+							VStack {
+								Text("Colors")
+									.font(.headline)
+									.foregroundColor(.gray)
+									.padding(.top, 10)
+								Text("Choose a color")
+									.padding(.top, 5)
+									.foregroundColor(.black)
+								Picker("test", selection: self.$slectedObj) {
+									ForEach(0 ..< self.colorArray.count) {
+										Text(self.colors[$0]).tag($0)
+									}
+								}
+								.foregroundColor(.black)
+								.labelsHidden()
+							}.background(RoundedRectangle(cornerRadius: 10)
+								.foregroundColor(Color.white).shadow(radius: 1))
+							VStack {
+								Button(action: {
+									debugPrint("Done Selected")
+									self.colorState = false
+									self.pickerMovement.value = self.slectedObj + 1
+									
+									self.pickerMovement.activeCommands[self.pickerMovement.count - 1].1 = self.pickerMovement.value
+									self.pickerMovement.value = 0
+									//self.slectedObj = 0
+								}) {
+									Text("Done").fontWeight(Font.Weight.bold).foregroundColor(.black)
+								}.padding()
+									.frame(maxWidth: 600)
+									.background(RoundedRectangle(cornerRadius: 10)
+										.foregroundColor(Color.white).shadow(radius: 1))
+								
+							}
+						}
+						.frame(width: gr.size.width, height: gr.size.height)
+						.zIndex(100)
+						.offset(y:-300)
+					}
 				}
 			}
 		}.edgesIgnoringSafeArea(.all)
-    }
+	}
 }
 
 extension View {
-    func inputPicker(state: Binding<Bool>) -> some View {
-		self.modifier(blockPicker(state: state))
-    }
+	func inputPicker(movementState: Binding<Bool>, degreeState: Binding<Bool>, colorState: Binding<Bool>) -> some View {
+		self.modifier(blockPicker(movementState: movementState, degreeState: degreeState, colorState: colorState))
+	}
 }
 
 struct MainBodyView_Previews: PreviewProvider {
