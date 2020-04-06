@@ -174,6 +174,14 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
             commandsCharacteristic, type: .withResponse)
     }
     
+    // Distance is represented by meters
+    public func rollDistance(distance: Double, heading: UInt16) {
+        let distUnits: UInt8 = (UInt8) (distance * 50)
+        let rollCommand = RollCommand(speed: distUnits, heading: heading)
+        sphero.availablePeripheral?.writeValue(rollCommand.dataForPacket(), for:
+            commandsCharacteristic, type: .withResponse)
+    }
+    
     public func turnLeft(heading: UInt16) {
         let clampedHeading = 360 - (heading % 360)
         let rollCommand = RollCommand(speed: 0, heading: clampedHeading)
@@ -188,6 +196,8 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
             commandsCharacteristic, type: .withResponse)
     }
     
+    // This function is used if updating heading mid-roll
+    // It does not change what the Sphero considers heading 0
     public func updateHeading(heading: UInt16) {
         let updateHeading = UpdateHeadingCommand(heading: heading)
         sphero.availablePeripheral?.writeValue(updateHeading.dataForPacket(), for: commandsCharacteristic, type: .withResponse)
