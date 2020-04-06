@@ -156,6 +156,25 @@ struct MainBodyView: View {
 								Spacer()
 								
 								HStack(spacing: 0.0) {
+                                    Button(action: {
+                                        print("Back tapped!")
+                                        let count = self.pickerMovement.count
+                                        if count > 0 {
+                                            self.pickerMovement.activeCommands[count-1] = (6,0)
+                                            self.pickerMovement.count -= 1
+                                        }
+                                    }) {
+                                        VStack {
+                                            Image(systemName: "arrow.left.circle")
+                                                .font(.title)
+                                                .padding(.all, 5)
+                                        }
+                                        .padding(.all)
+                                        .foregroundColor(.white)
+                                        .background(Color.blue)
+                                        .cornerRadius(90)
+                                        .zIndex(100)
+                                    }
 									Button(action: {
 										print("Trash tapped!")
 										self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
