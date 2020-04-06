@@ -23,28 +23,27 @@ struct BlockRow: View {
 	var onChanged: ((CGPoint, Block) -> DragState)?
 	var onEnded: ((CGPoint, Int, Block) -> Void)?
 	var index: Int
-
+	var newMovement: Int
+	
 	var body: some View {
 		ZStack {
-			//createBlock(block: blockVar)
 			if (blockVar.name == "Drop Area") {
-			ZStack {
-				Rectangle()
-					.foregroundColor(.gray)
-					.frame(width: 320, height: 150)
-					.overlay(
-						Rectangle()
-						//Capsule(style: .continuous)
-							.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 4, dash: [10]))
+				ZStack {
+					Rectangle()
+						.foregroundColor(.gray)
+						.frame(width: 320, height: 150)
+						.overlay(
+							Rectangle()
+								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 4, dash: [10]))
 					)
-				Text("Drag and drop commands into this area!")
-					.font(.headline)
-					.fontWeight(.light)
-					.foregroundColor(Color.white)
-					.multilineTextAlignment(.center)
-					.frame(width: 190.0)
-					.zIndex(5)
-					.frame(width:50, height: 200)
+					Text("Drag and drop commands into this area!")
+						.font(.title)
+						.fontWeight(.heavy)
+						.foregroundColor(Color.white)
+						.multilineTextAlignment(.center)
+						.frame(width: 200.0)
+						.zIndex(5)
+						.frame(width:50, height: 200)
 				}
 			} else if(blockVar.color == "clear"){
 				ZStack {
@@ -52,32 +51,54 @@ struct BlockRow: View {
 						.foregroundColor(.clear)
 						.padding()
 						.frame(width: 320, height: 50)
-//						.overlay(
-//							Capsule(style: .continuous)
-//								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
-//						)
 				}
 				.frame(width:300)
 				.padding(.horizontal, 5)
-			} else if (blockVar.category.rawValue == "Dropped"){
-				ZStack {
-					Rectangle()
-						.cornerRadius(12)
-						.frame(width: 320, height: 50)
-						.zIndex(1)
-						.foregroundColor(blockColor(bColor: blockVar.color))
-					HStack {
-						Text(blockVar.name)
-							.foregroundColor(Color.black)
+			} else if (blockVar.category.rawValue == "Dropped") {
+				if (newMovement == 0){
+					Text("").hidden()
+				} else {
+					ZStack {
+						Rectangle()
+							.cornerRadius(12)
+							.frame(width: 320, height: 50)
 							.zIndex(1)
-						PickerView(pickerImageVar: blockVar.systemName)
-							.zIndex(100)
-							.frame(width: 30, height: 30)
-							.offset(y:-11)
+							.foregroundColor(blockColor(bColor: blockVar.color))
+						HStack {
+							if (blockVar.input.rawValue == "Units") {
+								Text(blockVar.name + " " + String(newMovement) + " Times")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else if (blockVar.input.rawValue == "Degrees") {
+								Text(blockVar.name + " " + String(newMovement) + " Degrees")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else if (blockVar.input.rawValue == "Colors"){
+								Text(blockVar.name + " " + String(newMovement) + " Color")
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							} else {
+								Text(blockVar.name)
+									.font(.headline)
+									.fontWeight(.heavy)
+									.foregroundColor(Color.white)
+									.zIndex(1)
+							}
+							Image(systemName: blockVar.systemName)
+								.resizable()
+								.frame(width: 30, height: 30)
+								.foregroundColor(Color.white)
+						}
+						.zIndex(100)
+						.frame(width: 320, height: 50)
 					}
-					.zIndex(100)
-					.frame(width: 320, height: 50)
-					}
+				}
 			} else {
 				ZStack {
 					Rectangle()
@@ -87,35 +108,36 @@ struct BlockRow: View {
 						.foregroundColor(blockColor(bColor: blockVar.color))
 					HStack {
 						Text(blockVar.name)
-							.foregroundColor(Color.black)
+							.font(.headline)
+							.fontWeight(.heavy)
+							.foregroundColor(Color.white)
 							.zIndex(10)
 						//Image Instead
 						Image(systemName: blockVar.systemName)
 							.resizable()
 							.frame(width: 30, height: 30)
-							.foregroundColor(Color.black)
+							.foregroundColor(Color.white)
 					}
 					.zIndex(100)
 					.frame(width: 200, height: 70)
 					.padding(.vertical, 5)
+				}
+					//Drag & Drop Functionality
+					.offset(dragAmount)
+					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
+					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
+					.gesture(DragGesture(coordinateSpace: .global)
+						.onChanged { value in
+							self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
+							self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
 					}
-						//Drag & Drop Functionality
-						.offset(dragAmount)
-						//.zIndex(dragAmount == .zero ? 0 : 30) // TODO: Figure out why block goes behind
-						.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-						.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-						.gesture(DragGesture(coordinateSpace: .global)
-							.onChanged { value in
-								self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
-								self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
+					.onEnded {
+						if(self.dragState == .good){
+							self.onEnded?($0.location, self.index, self.blockVar)
 						}
-						.onEnded {
-							if(self.dragState == .good){
-								self.onEnded?($0.location, self.index, self.blockVar)
-							}
-								self.dragAmount = .zero
-							}
-					)//.zIndex(dragAmount == .zero ? 0 : 1)
+						self.dragAmount = .zero
+						}
+				)
 			}
 		}
 	}
@@ -132,59 +154,6 @@ struct BlockRow: View {
 	}
 }
 
-//extension View {
-//	func createBlock(block: Block) -> some View {
-//		if(block.color == "clear"){
-//			return AnyView(ZStack {
-//				Rectangle()
-//					.foregroundColor(.clear)
-//					.padding()
-//					.frame(width: 190, height: 70)
-//					.overlay(
-//						Capsule(style: .continuous)
-//							.stroke(blockColor(bColor: block.color), style: StrokeStyle(lineWidth: 5, dash: [10]))
-//					)
-//			}
-//			.padding(.horizontal, 5)
-//			)
-//		} else {
-//			return AnyView(ZStack {
-//				Rectangle()
-//					.cornerRadius(12)
-//					.frame(width: 200, height: 70)
-//					.zIndex(-10)
-//					.foregroundColor(blockColor(bColor: block.color))
-//				HStack {
-//					Text(block.name)
-//						.foregroundColor(Color.black)
-//						.zIndex(10)
-//					SliderView(pickerImageVar: block.systemName)
-//						.frame(width: 30, height: 30)
-//				}
-//				.frame(width: 200, height: 70)
-//				}
-//					//Drag & Drop Functionality
-//					.offset(dragAmount)
-//					.zIndex(dragAmount == .zero ? 0 : 30) // TODO: Figure out why block goes behind
-//					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-//					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
-//					.gesture(DragGesture(coordinateSpace: .global)
-//						.onChanged { value in
-//							self.dragAmount = CGSize(width: value.translation.width, height: value.translation.height)
-//							self.dragState = self.onChanged?(value.location, self.blockVar) ?? .unknown
-//					}
-//					.onEnded {
-//						if(self.dragState == .good){
-//							self.onEnded?($0.location, self.index, self.blockVar)
-//						}
-//							self.dragAmount = .zero
-//						}
-//				)
-//					.zIndex(dragAmount == .zero ? 0 : 1)
-//			)
-//		}
-//	}
-//}
 
 func blockColor(bColor: String) -> Color {
 	let temp = bColor
@@ -217,21 +186,13 @@ func blockColor(bColor: String) -> Color {
 	}
 }
 
-//func blockDropState(state: Block.Category) -> String {
-//	//let temp =  state
-//
-//	if(state.rawValue == "dropped"){
-//		return "Dropped"
-//	}
-//}
-
 struct BlockRow_Previews: PreviewProvider {
 	static var previews: some View {
 		VStack{
-			BlockRow(blockVar: blockData[0], index: 0)
-			BlockRow(blockVar: blockData[6], index: 0)
-			BlockRow(blockVar: blockData[7], index: 0)
-			BlockRow(blockVar: blockData[13], index: 0)
+			BlockRow(blockVar: blockData[0], index: 0, newMovement: 1)
+			BlockRow(blockVar: blockData[6], index: 0, newMovement: 1)
+			BlockRow(blockVar: blockData[11], index: 0, newMovement: 1)
+			BlockRow(blockVar: blockData[13], index: 0, newMovement: 1)
 		}
 		.frame(width: 600, height: 600)
 		.background(Color.black)
