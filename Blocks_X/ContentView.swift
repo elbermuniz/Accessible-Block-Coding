@@ -31,7 +31,7 @@ struct ContentView: View {
 							MainHeaderView()
 						}
 						
-						if(!self.playgroundShowing || self.tutorialShowing){
+						if(!self.playgroundShowing && !self.tutorialShowing){
 							HStack{
 								Text("Block X")
 									.fontWeight(.black)

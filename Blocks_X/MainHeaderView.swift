@@ -7,23 +7,13 @@
 //
 
 import SwiftUI
+import AVKit
+import AVFoundation
 
 struct MainHeaderView: View {
 	var body: some View {
 		GeometryReader { geometry in
 			HStack {
-				Section{
-					Image(systemName: "chevron.left")
-						.font(.title)
-						.padding(.leading)
-					
-					Text("BlockX")
-						.font(.headline)
-						.fontWeight(.heavy)
-				}
-				.foregroundColor(.blue)
-				
-				Spacer()
 				Spacer()
 				Text("Welcome!")
 					.font(.title)
@@ -31,31 +21,49 @@ struct MainHeaderView: View {
 					.multilineTextAlignment(.center)
 					.padding(.vertical, 10.0)
 				Spacer()
-				
-				Section {
-					Button(action: {
-						print("Robot Settings!")
-					}) {
-						HStack {
-							Text("Robot Settings")
-								.fontWeight(.semibold)
-								.font(.title)
-							Image(systemName: "gear")
-								.font(.title)
-								.padding(.vertical, 5)
-						}
-						.padding()
-						.foregroundColor(.white)
-						.background(Color.blue)
-						.cornerRadius(90)
-					}
-					.padding(.trailing)
-				}
+				PlayerView()
 			}
-//			.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height)
-				.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height).background(Color.gray)
+			.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height).background(Color.gray)
 		}
 	}
+}
+
+struct PlayerView: UIViewRepresentable {
+  func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
+  }
+
+  func makeUIView(context: Context) -> UIView {
+    return PlayerUIView(frame: .zero)
+  }
+}
+
+class PlayerUIView: UIView {
+  private let playerLayer = AVPlayerLayer()
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+	
+	guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
+			   debugPrint("video.m4v not found")
+			   return
+		   }
+
+	let url = URL(fileURLWithPath: path)
+    let player = AVPlayer(url: url)
+    player.play()
+
+    playerLayer.player = player
+    layer.addSublayer(playerLayer)
+  }
+
+  required init?(coder: NSCoder) {
+	fatalError("init(coder:) has not been implemented")
+  }
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    playerLayer.frame = bounds
+  }
 }
 
 struct Header_Previews: PreviewProvider {
