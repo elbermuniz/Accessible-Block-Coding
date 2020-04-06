@@ -124,29 +124,6 @@ struct ContentView: View {
 			}
 		}
 		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.black).edgesIgnoringSafeArea(.bottom)
-		//		VStack{
-		//			GeometryReader { geometry in
-		//				VStack {
-		//					// Start of header section
-		//					MainHeaderView()
-		//						.frame(height: geometry.size.height * (0.14))
-		//					// End of header section
-		//
-		//					//Spacer()
-		//
-		//					MainBodyView()
-		//						.frame(height: geometry.size.height * (0.86))
-		//						.padding(.top, -10)
-		//
-		//					// End of center area
-		//					//Spacer()
-		//				}
-		//				.frame(width: geometry.size.width)
-		//				.zIndex(1)
-		//			}
-		//		}
-		//		.background(Color.black).edgesIgnoringSafeArea(.vertical)
-		//		.zIndex(0)
 	}
 }
 
