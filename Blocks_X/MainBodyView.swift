@@ -158,11 +158,6 @@ struct MainBodyView: View {
 								HStack(spacing: 0.0) {
                                     Button(action: {
                                         print("Back tapped!")
-//                                        for value in 0...30 {
-//                                            if self.pickerMovement.activeCommands[value+1].0 == 6 {
-//                                                self.pickerMovement.activeCommands[value] = (6,0)
-//                                                break
-//                                            }
                                         let count = self.pickerMovement.count
                                         if count > 0 {
                                             self.pickerMovement.activeCommands[count-1] = (6,0)
