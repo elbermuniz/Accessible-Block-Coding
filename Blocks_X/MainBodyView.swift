@@ -215,8 +215,8 @@ struct MainBodyView: View {
 	
 	func playCommands() {
 		for value in 0..<30 {
-			if(pickerMovement.activeCommands[value].0 != 6 || pickerMovement.activeCommands[value].0 != 11){
-				print(pickerMovement.activeCommands[value].1)
+			if(pickerMovement.activeCommands[value].0 != 6 && pickerMovement.activeCommands[value].0 != 11){
+				print(pickerMovement.activeCommands[value])
 			}
 		}
 		self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
