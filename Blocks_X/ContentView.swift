@@ -13,6 +13,7 @@ struct ContentView: View {
 	let views = ["Playground", "Tutorial"]
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
+	let gradient = Gradient(colors: [.gray, .black])
 	
 	//var block: Block
 	
@@ -21,7 +22,11 @@ struct ContentView: View {
 			GeometryReader { geometry in
 				NavigationView {
 					ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-						Color.black.edgesIgnoringSafeArea(.all)
+						//Color.black.edgesIgnoringSafeArea(.all)
+						Rectangle()
+							.fill(
+								RadialGradient(gradient: self.gradient, center: .center, startRadius: 1, endRadius: 1100)
+						).edgesIgnoringSafeArea(.all)
 						
 						// A card-like view that is initially offscreen,
 						// and slides on when detailShowing == true
@@ -33,12 +38,14 @@ struct ContentView: View {
 						
 						if(!self.playgroundShowing && !self.tutorialShowing){
 							HStack{
-								Text("Block X")
-									.fontWeight(.black)
+								Text("Blocks X")
+									.fontWeight(.light)
+									.shadow(color: Color.blue, radius: 15)
+									.shadow(color: Color.white, radius: 5)
 							}
 							.multilineTextAlignment(.center)
-							.padding(.bottom, -15.0)
-							.font(.system(size: 72))
+							.padding(.top, 30.0)
+							.font(.system(size: 100))
 							.foregroundColor(.white)
 						}
 						
@@ -58,16 +65,17 @@ struct ContentView: View {
 										.foregroundColor(.white)
 								}
 							}
+							.shadow(color: Color.blue, radius: 10)
 							.shadow(color: Color.white, radius: 10)
 							.animation(.easeInOut)
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
 							
 							//Added for spacing
-							Text("")
-							Text("")
-							Text("")
-
+							Text("").hidden()
+							Text("").hidden()
+							Text("").hidden()
+							
 							
 							Button(action: {
 								self.tutorialShowing.toggle()
@@ -81,13 +89,25 @@ struct ContentView: View {
 										.foregroundColor(.white)
 								}
 							}
+							.shadow(color: Color.blue, radius: 10)
 							.shadow(color: Color.white, radius: 10)
 							.animation(.interactiveSpring())
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
 							
 							Spacer()
-						}
+							if(!self.playgroundShowing && !self.tutorialShowing){
+								HStack{
+									Text("Sphero Device & iOS 13+ Necessary")
+										.fontWeight(.light)
+									//.shadow(color: Color.blue, radius: 15)
+									//.shadow(color: Color.white, radius: 5)
+								}
+								.multilineTextAlignment(.center)
+								.padding(.bottom, 15.0)
+								.font(.system(size: 16))
+								.foregroundColor(.white)
+							}}
 					}
 						// This is the key modifier
 						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing)
@@ -101,7 +121,7 @@ struct ContentView: View {
 									Image(systemName: "chevron.left")
 										.font(.title)
 										.padding(.leading)
-									Text("BlockX")
+									Text("Blocks X")
 										.font(.headline)
 										.fontWeight(.heavy)
 								}.foregroundColor(.blue)
@@ -113,7 +133,7 @@ struct ContentView: View {
 								HStack {
 									Text("Robot Settings")
 										.fontWeight(.semibold)
-										.font(.title)
+										.font(.headline)
 									Image(systemName: "gear")
 										.font(.title)
 										.padding(.vertical, 5)
@@ -130,7 +150,7 @@ struct ContentView: View {
 				//.frame(width: geometry.size.width, height: geometry.size.height)
 			}
 		}
-		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.black).edgesIgnoringSafeArea(.bottom)
+		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.white).edgesIgnoringSafeArea(.bottom)
 	}
 }
 
