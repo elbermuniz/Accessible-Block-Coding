@@ -50,7 +50,7 @@ struct MainBodyView: View {
 						//Comands are created on left side
 						VStack {
 							ForEach(0..<6){ number in
-								BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
+                                BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
 							}
 							.padding(-3.5)
 							.zIndex(30)
@@ -174,6 +174,8 @@ struct MainBodyView: View {
                                         .background(Color.blue)
                                         .cornerRadius(90)
                                         .zIndex(100)
+                                        .accessibility(label: Text("Erase"))
+                                        .accessibility(hint: Text("Tap to delete last command."))
                                     }
 									Button(action: {
 										print("Trash tapped!")
@@ -190,6 +192,8 @@ struct MainBodyView: View {
 										.background(Color.blue)
 										.cornerRadius(90)
 										.zIndex(100)
+                                        .accessibility(label: Text("Delete"))
+                                        .accessibility(hint: Text("Tap to delete all code."))
 									}
 									
 									Button(action: {
@@ -207,6 +211,8 @@ struct MainBodyView: View {
 										.background(Color.blue)
 										.cornerRadius(90)
 										.zIndex(100)
+                                        .accessibility(label: Text("Play"))
+                                        .accessibility(hint: Text("Tap to run commands on Sphero."))
 									}
 								}
 								.padding([.bottom, .trailing], 20)
