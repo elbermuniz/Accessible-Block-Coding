@@ -16,7 +16,6 @@ class UserSettings: ObservableObject {
 	@Published var count = 0 // keeps track of which block has been filled in the list
 }
 
-
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?

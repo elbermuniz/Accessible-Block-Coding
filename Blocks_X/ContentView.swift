@@ -10,12 +10,12 @@ import SwiftUI
 
 struct ContentView: View {
 	//@EnvironmentObject var pickerMovement: UserSettings
-	let views = ["Playground", "Tutorial"]
+	
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
-	let gradient = Gradient(colors: [.gray, .black])
 	
-	//var block: Block
+	let views = ["Playground", "Tutorial"]
+	let gradient = Gradient(colors: [.gray, .black])
 	
 	var body: some View {
 		VStack {
