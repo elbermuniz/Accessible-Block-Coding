@@ -223,6 +223,7 @@ struct MainBodyView: View {
 					
 				}
 				.zIndex(-1)
+				.background(Color.black)
 				.frame(width: geometry.size.width * (0.70))
 				.offset(x: -7.5)
 				// End of main drop area
