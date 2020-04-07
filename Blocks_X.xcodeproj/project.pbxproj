@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		724051612434D5B50020D98E /* SpheroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724051602434D5B50020D98E /* SpheroController.swift */; };
-		7241D331243BF8B70071BB99 /* video.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7241D330243BF80B0071BB99 /* video.m4v */; };
 		724F7AF4242BBD8000AC94AB /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF3242BBD8000AC94AB /* TutorialView.swift */; };
 		724F7AF6242BC63700AC94AB /* MainBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF5242BC63700AC94AB /* MainBodyView.swift */; };
 		7258EC8E2408B9FE004DC42C /* BlockRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7258EC8D2408B9FD004DC42C /* BlockRow.swift */; };
@@ -27,7 +26,6 @@
 
 /* Begin PBXFileReference section */
 		724051602434D5B50020D98E /* SpheroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpheroController.swift; sourceTree = "<group>"; };
-		7241D330243BF80B0071BB99 /* video.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = video.m4v; path = "/Users/elber/Accessible-Block-Coding/Blocks_X/video.m4v"; sourceTree = "<absolute>"; };
 		724F7AF3242BBD8000AC94AB /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		724F7AF5242BC63700AC94AB /* MainBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBodyView.swift; sourceTree = "<group>"; };
 		7258EC8D2408B9FD004DC42C /* BlockRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockRow.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 		72DE4BED240703D30075DBB6 /* Blocks_X */ = {
 			isa = PBXGroup;
 			children = (
-				7241D330243BF80B0071BB99 /* video.m4v */,
 				72DE4BEE240703D30075DBB6 /* AppDelegate.swift */,
 				72DE4BF0240703D30075DBB6 /* SceneDelegate.swift */,
 				72DE4BF2240703D30075DBB6 /* ContentView.swift */,
@@ -180,7 +177,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				72F162CD2437AB8E000AE52B /* .gitignore in Resources */,
-				7241D331243BF8B70071BB99 /* video.m4v in Resources */,
 				72DE4BFB240703DA0075DBB6 /* LaunchScreen.storyboard in Resources */,
 				72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */,
 				72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */,

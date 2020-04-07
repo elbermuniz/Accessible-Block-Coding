@@ -94,9 +94,11 @@ struct BlockRow: View {
 								.resizable()
 								.frame(width: 30, height: 30)
 								.foregroundColor(Color.white)
+                                .accessibility(hidden: true)
 						}
 						.zIndex(100)
 						.frame(width: 320, height: 50)
+                        .accessibilityElement(children: .combine)
 					}
 				}
 			} else {

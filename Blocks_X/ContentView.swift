@@ -128,7 +128,6 @@ struct ContentView: View {
 				.frame(width: geometry.size.width, height: geometry.size.height)
 				.navigationViewStyle(StackNavigationViewStyle())
 				//.frame(width: geometry.size.width, height: geometry.size.height)
->>>>>>> master
 			}
 		}
 		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.black).edgesIgnoringSafeArea(.bottom)
