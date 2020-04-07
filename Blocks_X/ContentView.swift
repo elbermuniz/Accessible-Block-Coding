@@ -100,11 +100,9 @@ struct ContentView: View {
 								HStack{
 									Text("Sphero Device & iOS 13+ Necessary")
 										.fontWeight(.light)
-									//.shadow(color: Color.blue, radius: 15)
-									//.shadow(color: Color.white, radius: 5)
 								}
 								.multilineTextAlignment(.center)
-								.padding(.bottom, 15.0)
+								.padding(.bottom, geometry.size.height * (0.05))
 								.font(.system(size: 16))
 								.foregroundColor(.white)
 							}}
