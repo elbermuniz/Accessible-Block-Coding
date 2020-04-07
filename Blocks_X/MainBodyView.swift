@@ -59,6 +59,24 @@ struct MainBodyView: View {
 						.frame(width: 250, height: 525)
 												
 						Spacer()
+						
+						Button(action: {
+							print("Trash tapped!")
+							self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
+							self.pickerMovement.count = 0
+						}) {
+							VStack {
+								Image(systemName: "trash")
+									.font(.title)
+									.padding(.all, 5)
+							}
+							.padding(.all)
+							.foregroundColor(.white)
+							.background(Color.blue)
+							.cornerRadius(90)
+							.zIndex(100)
+						}
+						.padding([.bottom, .trailing], 20)
 					}
 					.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width, minHeight: geo.size.height * (0.25), maxHeight: geo.size.height)
 					.background(Color.gray)
@@ -175,22 +193,6 @@ struct MainBodyView: View {
                                         .cornerRadius(90)
                                         .zIndex(100)
                                     }
-									Button(action: {
-										print("Trash tapped!")
-										self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
-										self.pickerMovement.count = 0
-									}) {
-										VStack {
-											Image(systemName: "trash")
-												.font(.title)
-												.padding(.all, 5)
-										}
-										.padding(.all)
-										.foregroundColor(.white)
-										.background(Color.blue)
-										.cornerRadius(90)
-										.zIndex(100)
-									}
 									
 									Button(action: {
 										print("Play tapped!")
