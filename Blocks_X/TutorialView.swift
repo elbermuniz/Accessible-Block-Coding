@@ -10,12 +10,12 @@ import SwiftUI
 import AVKit
 import AVFoundation
 
-struct MainHeaderView: View {
+struct TutorialView: View {
 	var body: some View {
 		GeometryReader { geometry in
-			HStack {
+			VStack {
 				Spacer()
-				Text("Welcome!")
+				Text("Tutorial Video")
 					.font(.title)
 					.fontWeight(.heavy)
 					.multilineTextAlignment(.center)
@@ -66,8 +66,8 @@ class PlayerUIView: UIView {
   }
 }
 
-struct Header_Previews: PreviewProvider {
+struct Tutorial_Previews: PreviewProvider {
     static var previews: some View {
-        MainHeaderView()
+		TutorialView()
     }
 }

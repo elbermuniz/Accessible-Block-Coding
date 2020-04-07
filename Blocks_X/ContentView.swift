@@ -28,7 +28,7 @@ struct ContentView: View {
 						if(self.playgroundShowing){
 							MainBodyView()
 						} else if(self.tutorialShowing){
-							MainHeaderView()
+							TutorialView()
 						}
 						
 						if(!self.playgroundShowing && !self.tutorialShowing){
@@ -58,10 +58,16 @@ struct ContentView: View {
 										.foregroundColor(.white)
 								}
 							}
-							.animation(.default)
+							.shadow(color: Color.white, radius: 10)
+							.animation(.easeInOut)
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
 							
+							//Added for spacing
+							Text("")
+							Text("")
+							Text("")
+
 							
 							Button(action: {
 								self.tutorialShowing.toggle()
@@ -75,7 +81,8 @@ struct ContentView: View {
 										.foregroundColor(.white)
 								}
 							}
-							.animation(.linear)
+							.shadow(color: Color.white, radius: 10)
+							.animation(.interactiveSpring())
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
 							
@@ -126,17 +133,6 @@ struct ContentView: View {
 		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.black).edgesIgnoringSafeArea(.bottom)
 	}
 }
-
-struct DetailView: View {
-	//let view: String
-	var body: some View{
-		VStack{
-			MainBodyView()
-		}
-	}
-}
-
-
 
 struct ContentView_Previews: PreviewProvider { //doesn't execute in app
 	static var previews: some View {
