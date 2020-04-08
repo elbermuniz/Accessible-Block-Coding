@@ -13,8 +13,9 @@ struct ContentView: View {
 	
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
+	@State private var mazesShowing = false
 	
-	let views = ["Playground", "Tutorial"]
+	let views = ["Playground", "Tutorial", "Mazes"]
 	let gradient = Gradient(colors: [.gray, .black])
 	
 	var body: some View {
@@ -34,9 +35,11 @@ struct ContentView: View {
 							MainBodyView()
 						} else if(self.tutorialShowing){
 							TutorialView()
+						} else if(self.mazesShowing){
+							MazesView()
 						}
 						
-						if(!self.playgroundShowing && !self.tutorialShowing){
+						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 							HStack{
 								Text("Blocks X")
 									.fontWeight(.light)
@@ -51,6 +54,7 @@ struct ContentView: View {
 						
 						VStack{
 							// Just here to change state
+							Spacer()
 							Spacer()
 							
 							Button(action: {
@@ -69,16 +73,33 @@ struct ContentView: View {
 							.shadow(color: Color.white, radius: 10)
 							.animation(.easeInOut)
 							.frame(width: 400, height: 120)
-							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
-							
-							//Added for spacing
-							Text("").hidden()
-							Text("").hidden()
-							Text("").hidden()
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
 							
 							
 							Button(action: {
-								self.tutorialShowing.toggle()
+								self.playgroundShowing.toggle()
+							}) {
+								ZStack{
+									Rectangle()
+										.cornerRadius(12)
+									Text("Mazes")
+										.font(.largeTitle)
+										.fontWeight(.heavy)
+										.foregroundColor(.white)
+								}
+							}
+							.shadow(color: Color.blue, radius: 10)
+							.shadow(color: Color.white, radius: 10)
+							.animation(.linear)
+							.frame(width: 400, height: 120)
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
+
+							
+							
+							Button(action: {
+								self.mazesShowing.toggle()
 							}) {
 								ZStack{
 									Rectangle()
@@ -93,10 +114,12 @@ struct ContentView: View {
 							.shadow(color: Color.white, radius: 10)
 							.animation(.interactiveSpring())
 							.frame(width: 400, height: 120)
-							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
+
 							
 							Spacer()
-							if(!self.playgroundShowing && !self.tutorialShowing){
+							if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 								HStack{
 									Text("Sphero Device & iOS 13+ Necessary")
 										.fontWeight(.light)
@@ -108,12 +131,13 @@ struct ContentView: View {
 							}}
 					}
 						// This is the key modifier
-						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing)
+						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing)
 						.navigationBarTitle("Welcome!", displayMode: .inline)
 						.navigationBarItems(leading:
 							Button(action: {
 								self.playgroundShowing = false
 								self.tutorialShowing = false
+								self.mazesShowing = false
 							}) {
 								HStack{
 									Image(systemName: "chevron.left")
@@ -145,10 +169,9 @@ struct ContentView: View {
 				}
 				.frame(width: geometry.size.width, height: geometry.size.height)
 				.navigationViewStyle(StackNavigationViewStyle())
-				//.frame(width: geometry.size.width, height: geometry.size.height)
 			}
 		}
-		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.white).edgesIgnoringSafeArea(.bottom)
+		.background(self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? Color.gray: Color.white).edgesIgnoringSafeArea(.bottom)
 	}
 }
 

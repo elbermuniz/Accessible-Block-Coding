@@ -17,6 +17,9 @@ struct MainBodyView: View {
 	@State private var enableMovementPicker = false
 	@State private var enableDegreePicker = false
 	@State private var enableColorPicker = false
+	@State var timeRemaining = 3
+	
+	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
 	//let spheroController = SpheroController()
 	
@@ -73,6 +76,8 @@ struct MainBodyView: View {
 							.background(Color.blue)
 							.cornerRadius(90)
 							.zIndex(100)
+							.accessibility(label: Text("Delete"))
+							.accessibility(hint: Text("Tap to delete all code."))
 						}
 						.padding([.bottom, .trailing], 20)
 					}
@@ -125,9 +130,9 @@ struct MainBodyView: View {
 												.inputPicker(movementState: self.$enableMovementPicker, degreeState: self.$enableDegreePicker, colorState: self.$enableColorPicker)
 												.onAppear{
 													self.dropArea[0] = geos.frame(in: .global)
-											}
+												}
 										}
-								)
+									)
 									.zIndex(4)
 							}
 							.zIndex(1)
@@ -230,12 +235,19 @@ struct MainBodyView: View {
 			}
 			.frame(width: geometry.size.width)
 			.onAppear(perform: self.startApp)
+			.onReceive(self.timer) { _ in
+				if self.timeRemaining > 0 {
+					self.timeRemaining -= 1
+				} else {
+					self.timeRemaining = 3
+				}
+			}
 		}
 	}
 	
 	func playCommands() {
-		let spheroController = SpheroController()
-		spheroController.connectToSpheroIfAvailable()
+		//let spheroController = SpheroController()
+		//spheroController.connectToSpheroIfAvailable()
 		
 		sleep(10)
 		
@@ -247,31 +259,31 @@ struct MainBodyView: View {
 			}
 		}
 		
-		for index in 0..<commands.count {
-			
-			if(commands[index].commandType == 7) { // Move Forward
-				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
-				
-			} else if(commands[0].commandType == 8) { // Move Backwards
-				// Spin 180 degrees
-				spheroController.turnRight(heading: UInt16(180))
-				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
-				
-			} else if(commands[0].commandType == 9) { // Turn Right
-				//Turn Right
-				spheroController.turnRight(heading: UInt16(commands[index].unit))
-				
-			} else if(commands[0].commandType == 10) { // Turn Left
-				//Turn Left
-				spheroController.turnLeft(heading: UInt16(commands[index].unit))
-				
-			} else if(commands[0].commandType == 12) { // Set Color
-				// Set Color
-				// spheroController.rearLedBrightness(UInt8(commands[index].unit))
-				// Not sure
-			}
-			
-		}
+//		for index in 0..<commands.count {
+//
+//			if(commands[index].commandType == 7) { // Move Forward
+//				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
+//
+//			} else if(commands[0].commandType == 8) { // Move Backwards
+//				// Spin 180 degrees
+//				spheroController.turnRight(heading: UInt16(180))
+//				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
+//
+//			} else if(commands[0].commandType == 9) { // Turn Right
+//				//Turn Right
+//				spheroController.turnRight(heading: UInt16(commands[index].unit))
+//
+//			} else if(commands[0].commandType == 10) { // Turn Left
+//				//Turn Left
+//				spheroController.turnLeft(heading: UInt16(commands[index].unit))
+//
+//			} else if(commands[0].commandType == 12) { // Set Color
+//				// Set Color
+//				// spheroController.rearLedBrightness(UInt8(commands[index].unit))
+//				// Not sure
+//			}
+//
+//		}
 //		self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
 //		self.pickerMovement.count = 0
 	}
@@ -315,6 +327,10 @@ struct MainBodyView: View {
 		//print(location)
 		if let match = pickerMovement.commandFrames.firstIndex(where: {$0.contains(location)}){
 			if pickerMovement.activeCommands[match].0 != 13 {
+				
+				if(timeRemaining == 1) {
+					playSound(sound: "bad-sound", type: "mp3")
+				}
 				return .bad
 			}
 			else {
@@ -326,9 +342,15 @@ struct MainBodyView: View {
 					if pickerMovement.activeCommands[pickerMovement.count].0 != 6 {
 						return .bad
 					} else {
+						if(timeRemaining == 1) {
+							playSound(sound: "good-sound", type: "mp3")
+						}
 						return .good
 					}
 				} else {
+					if(timeRemaining == 1) {
+						playSound(sound: "bad-sound", type: "mp3")
+					}
 					return .bad
 				}
 			} else {
