@@ -34,14 +34,14 @@ struct ContentView: View {
 						if(self.playgroundShowing){
 							MainBodyView()
 						} else if(self.tutorialShowing){
-							TutorialView()
+							TutorialView().environmentObject(PlayerState())
 						} else if(self.mazesShowing){
 							MazesView()
 						}
 						
 						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 							HStack{
-								Text("Blocks X")
+								Text("CodeSphere")
 									.fontWeight(.light)
 									.shadow(color: Color.blue, radius: 15)
 									.shadow(color: Color.white, radius: 5)
@@ -78,7 +78,7 @@ struct ContentView: View {
 							
 							
 							Button(action: {
-								self.playgroundShowing.toggle()
+								self.mazesShowing.toggle()
 							}) {
 								ZStack{
 									Rectangle()
@@ -99,7 +99,7 @@ struct ContentView: View {
 							
 							
 							Button(action: {
-								self.mazesShowing.toggle()
+								self.tutorialShowing.toggle()
 							}) {
 								ZStack{
 									Rectangle()
@@ -143,7 +143,7 @@ struct ContentView: View {
 									Image(systemName: "chevron.left")
 										.font(.title)
 										.padding(.leading)
-									Text("Blocks X")
+									Text("Home")
 										.font(.headline)
 										.fontWeight(.heavy)
 								}.foregroundColor(.blue)
