@@ -10,7 +10,27 @@ import SwiftUI
 import AVKit
 import AVFoundation
 
+class PlayerState: ObservableObject {
+
+    public var currentPlayer: AVPlayer?
+    private var videoUrl : URL?
+
+    public func player(for url: URL) -> AVPlayer {
+        if let player = currentPlayer, url == videoUrl {
+            return player
+        }
+        currentPlayer = AVPlayer(url: url)
+        videoUrl = url
+        return currentPlayer!
+    }
+}
+
 struct TutorialView: View {
+	@EnvironmentObject var playerState : PlayerState
+    @State private var vURL = URL(string: "https://www.radiantmediaplayer.com/media/bbb-360p.mp4")
+
+	@State private var showVideoPlayer = false
+	
 	var body: some View {
 		GeometryReader { geometry in
 			VStack {
@@ -21,53 +41,42 @@ struct TutorialView: View {
 					.multilineTextAlignment(.center)
 					.padding(.vertical, 10.0)
 				Spacer()
-				PlayerView()
+				
+				Button(action: { self.showVideoPlayer = true }) {
+					Text("Start video").font(.title)
+				}
+				.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
+					AVPlayerView(videoURL: self.$vURL)
+						.edgesIgnoringSafeArea(.all)
+						.environmentObject(self.playerState)
+				}
+				Spacer()
 			}
 			.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height).background(Color.gray)
 		}
 	}
 }
 
-struct PlayerView: UIViewRepresentable {
-  func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
-  }
 
-  func makeUIView(context: Context) -> UIView {
-    return PlayerUIView(frame: .zero)
-  }
-}
+struct AVPlayerView: UIViewControllerRepresentable {
 
-class PlayerUIView: UIView {
-  private let playerLayer = AVPlayerLayer()
+    @EnvironmentObject var playerState : PlayerState
+    @Binding var videoURL: URL?
 
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-	
-	guard let path = Bundle.main.path(forResource: "video", ofType:"m4v") else {
-			   debugPrint("video.m4v not found")
-			   return
-		   }
+    func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
+    }
 
-	let url = URL(fileURLWithPath: path)
-    let player = AVPlayer(url: url)
-    player.play()
-
-    playerLayer.player = player
-    layer.addSublayer(playerLayer)
-  }
-
-  required init?(coder: NSCoder) {
-	fatalError("init(coder:) has not been implemented")
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    playerLayer.frame = bounds
-  }
+    func makeUIViewController(context: Context) -> AVPlayerViewController {
+        let playerController = AVPlayerViewController()
+        playerController.modalPresentationStyle = .fullScreen
+        playerController.player = playerState.player(for: videoURL!)
+        playerController.player?.play()
+        return playerController
+    }
 }
 
 struct Tutorial_Previews: PreviewProvider {
     static var previews: some View {
-		TutorialView()
+		TutorialView().environmentObject(PlayerState())
     }
 }

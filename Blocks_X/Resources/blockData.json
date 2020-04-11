@@ -110,5 +110,21 @@
         "systemName": "checkmark.seal.fill",
 		"color": "clear",
 		"input": "None"
-    }
+    },
+	{
+		"name": "Open Spot",
+        "category": "Normal",
+        "id": 14,
+        "systemName": "checkmark.seal.fill",
+		"color": "green",
+		"input": "None"
+	},
+	{
+		"name": "Obstruction",
+        "category": "Normal",
+        "id": 15,
+        "systemName": "xmark.octagon.fill",
+		"color": "red",
+		"input": "None"
+	}
 ]
