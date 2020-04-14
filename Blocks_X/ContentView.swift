@@ -10,12 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
 	//@EnvironmentObject var pickerMovement: UserSettings
-	let views = ["Playground", "Tutorial"]
+	
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
-	let gradient = Gradient(colors: [.gray, .black])
+	@State private var mazesShowing = false
 	
-	//var block: Block
+	let views = ["Playground", "Tutorial", "Mazes"]
+	let gradient = Gradient(colors: [.gray, .black])
 	
 	var body: some View {
 		VStack {
@@ -33,12 +34,14 @@ struct ContentView: View {
 						if(self.playgroundShowing){
 							MainBodyView()
 						} else if(self.tutorialShowing){
-							TutorialView()
+							TutorialView().environmentObject(PlayerState())
+						} else if(self.mazesShowing){
+							MazesView()
 						}
 						
-						if(!self.playgroundShowing && !self.tutorialShowing){
+						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 							HStack{
-								Text("Blocks X")
+								Text("CodeSphere")
 									.fontWeight(.light)
 									.shadow(color: Color.blue, radius: 15)
 									.shadow(color: Color.white, radius: 5)
@@ -51,6 +54,7 @@ struct ContentView: View {
 						
 						VStack{
 							// Just here to change state
+							Spacer()
 							Spacer()
 							
 							Button(action: {
@@ -69,12 +73,29 @@ struct ContentView: View {
 							.shadow(color: Color.white, radius: 10)
 							.animation(.easeInOut)
 							.frame(width: 400, height: 120)
-							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
 							
-							//Added for spacing
-							Text("").hidden()
-							Text("").hidden()
-							Text("").hidden()
+							
+							Button(action: {
+								self.mazesShowing.toggle()
+							}) {
+								ZStack{
+									Rectangle()
+										.cornerRadius(12)
+									Text("Example Maps")
+										.font(.largeTitle)
+										.fontWeight(.heavy)
+										.foregroundColor(.white)
+								}
+							}
+							.shadow(color: Color.blue, radius: 10)
+							.shadow(color: Color.white, radius: 10)
+							.animation(.linear)
+							.frame(width: 400, height: 120)
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
+
 							
 							
 							Button(action: {
@@ -93,35 +114,36 @@ struct ContentView: View {
 							.shadow(color: Color.white, radius: 10)
 							.animation(.interactiveSpring())
 							.frame(width: 400, height: 120)
-							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing ? geometry.size.height : 0)
+							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
+							.padding()
+
 							
 							Spacer()
-							if(!self.playgroundShowing && !self.tutorialShowing){
+							if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 								HStack{
 									Text("Sphero Device & iOS 13+ Necessary")
 										.fontWeight(.light)
-									//.shadow(color: Color.blue, radius: 15)
-									//.shadow(color: Color.white, radius: 5)
 								}
 								.multilineTextAlignment(.center)
-								.padding(.bottom, 15.0)
+								.padding(.bottom, geometry.size.height * (0.05))
 								.font(.system(size: 16))
 								.foregroundColor(.white)
 							}}
 					}
 						// This is the key modifier
-						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing)
+						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing)
 						.navigationBarTitle("Welcome!", displayMode: .inline)
 						.navigationBarItems(leading:
 							Button(action: {
 								self.playgroundShowing = false
 								self.tutorialShowing = false
+								self.mazesShowing = false
 							}) {
 								HStack{
 									Image(systemName: "chevron.left")
 										.font(.title)
 										.padding(.leading)
-									Text("Blocks X")
+									Text("Home")
 										.font(.headline)
 										.fontWeight(.heavy)
 								}.foregroundColor(.blue)
@@ -147,10 +169,9 @@ struct ContentView: View {
 				}
 				.frame(width: geometry.size.width, height: geometry.size.height)
 				.navigationViewStyle(StackNavigationViewStyle())
-				//.frame(width: geometry.size.width, height: geometry.size.height)
 			}
 		}
-		.background(self.playgroundShowing || self.tutorialShowing ? Color.gray: Color.white).edgesIgnoringSafeArea(.bottom)
+		.background(self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? Color.gray: Color.white).edgesIgnoringSafeArea(.bottom)
 	}
 }
 
