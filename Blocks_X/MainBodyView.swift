@@ -52,7 +52,7 @@ struct MainBodyView: View {
 						
 						//Comands are created on left side
 						VStack {
-							ForEach(0..<6){ number in
+							ForEach(0..<4){ number in
                                 BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
 							}
 							.padding(-3.5)
@@ -204,24 +204,6 @@ struct MainBodyView: View {
                                         .accessibility(label: Text("Erase"))
                                         .accessibility(hint: Text("Tap to delete last command."))
                                     }
-									Button(action: {
-										print("Trash tapped!")
-										self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
-										self.pickerMovement.count = 0
-									}) {
-										VStack {
-											Image(systemName: "trash")
-												.font(.title)
-												.padding(.all, 5)
-										}
-										.padding(.all)
-										.foregroundColor(.white)
-										.background(Color.blue)
-										.cornerRadius(90)
-										.zIndex(100)
-                                        .accessibility(label: Text("Delete"))
-                                        .accessibility(hint: Text("Tap to delete all code."))
-									}
 									
 									Button(action: {
 										print("Play tapped!")
