@@ -19,113 +19,380 @@ struct MazesView: View {
 	var body: some View {
 		GeometryReader { geometry in
 			ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-				//Color.black.edgesIgnoringSafeArea(.all)
 				Rectangle()
 					.fill(
 						RadialGradient(gradient: self.gradient, center: .center, startRadius: 1, endRadius: 1100)
 				).edgesIgnoringSafeArea(.all)
 				
-				HStack{
-					Text("Map Customizer")
-						.fontWeight(.heavy)
-				}
-				.multilineTextAlignment(.center)
-				.padding(.top, 0.0)
-				.font(.system(size: 72))
-				.foregroundColor(.white)
-				
 				VStack {
+					Text("Map Selector")
+						.fontWeight(.light)
+						.shadow(color: Color.blue, radius: 15)
+						.shadow(color: Color.white, radius: 5)
+						.multilineTextAlignment(.center)
+						.padding(.top, 10.0)
+						.font(.system(size: 72))
+						.foregroundColor(.white)
 					
-					Text("").font(.title).padding()
-					Text("").font(.title).padding()
-					Text("").font(.title).padding()
 					
-					ZStack{
-						VStack {
-							ForEach(0..<6) { row in
-								HStack {
-									ForEach(0..<3){ column in
-										HStack{
-											// Needed to increase global count variable
-											Text("_____")
-												.onAppear(perform: self.increaseCount)
-										}
-										.hidden()
-										
-										BlockRow(blockVar: blockData[self.activeCommands[row][column]], onChanged: self.commandMoved, index: 5*row+column, newMovement: 0)
-											.overlay(
-												GeometryReader { geo in
-													Color.clear
-														.onAppear{
-															self.commandFrames[self.count] = geo.frame(in: .global)
-													}
-												}
-										)
-										//.border(Color.white)
-									}
-								}
-							}
-							.foregroundColor(Color.white)
-						}
-					}
+					ToggleArea()
+						.padding(.top, -45)
+						.frame(width: geometry.size.width * (0.40))
 					
+					Spacer()
 				}
 				.frame(width: geometry.size.width)
-				//.onAppear(perform: self.startApp)
 			}
 			.frame(minWidth: geometry.size.width)
-				//.background(Color.gray)
-				.zIndex(10)
-			// End of commands area
-			
-			
-			// Start of drop area and top and bottom buttons
-		}
-	}
-	
-	func increaseCount() {
-		print("Build count: ", count)
-		count = count+1
-	}
-	
-	func startApp() {
-		let commands = [15, 15]
-		//		commandList = commands
-	}
-	
-	func commandDropped(location: CGPoint, blockIndex: Int, block: Block) {
-		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			let match = 17 - match
-			let row = match/3
-			let column = match % 3
-			
-			print("Block ID: ", block.id, "Block Index: ", blockIndex, "Original Command Block ID: ", activeCommands[row][column])
-			activeCommands[row][column] = block.id
-			
-			//        bcommandList[blockIndex] = block.id
-			
-			print(activeCommands)
-		}
-	}
-	
-	func commandMoved(location: CGPoint, block: Block) -> DragState {
-		if let match = commandFrames.firstIndex(where: {$0.contains(location)}){
-			let match = 17 - match
-			let row = match/3
-			let column = match % 3
-			
-			if activeCommands[row][column] != 14 {
-				return .bad
-			}
-			else {
-				return .good
-			}
-		} else {
-			return .unknown
+			.zIndex(10)
 		}
 	}
 }
-//
+
+extension MazesView {
+	struct ToggleArea: View {
+		@State var showEasy:Bool = true
+		@State var showMedium:Bool = false
+		@State var showHard:Bool = false
+		
+		var body: some View {
+			let on1 = Binding<Bool>(get: { self.showEasy }, set: { self.showEasy = $0; self.showMedium = false; self.showHard = false })
+			let on2 = Binding<Bool>(get: { self.showMedium }, set: { self.showEasy = false; self.showMedium = $0; self.showHard = false })
+			let on3 = Binding<Bool>(get: { self.showHard }, set: { self.showEasy = false; self.showMedium = false; self.showHard = $0 })
+			
+			return VStack{
+				
+				VStack{
+					Toggle(isOn: on1) {
+						Text("Show Easy Map")
+							.fontWeight(.heavy)
+							.padding(.leading, 5)
+					}.padding(.all, 7)
+					Divider()
+					Toggle(isOn: on2) {
+						Text("Show Medium Map")
+							.fontWeight(.heavy)
+							.padding(.leading, 5)
+					}.padding(.all, 7)
+					Divider()
+					Toggle(isOn: on3) {
+						Text("Show Hard Map")
+							.fontWeight(.heavy)
+							.padding(.leading, 5)
+					}.padding(.all, 7)
+				}
+				.foregroundColor(.white)
+				.background(Color.black)
+				
+				VStack{
+					if showEasy {
+						Text("Easy")
+					} else if showMedium {
+						Text("Medium")
+					} else if showHard {
+						Text("Hard")
+					}
+					
+					MapArea(easyMap: showEasy, mediumMap: showMedium, hardMap: showHard)
+				}
+			}
+		}
+	}
+	
+	struct GridStack<Content: View>: View {
+		let rows: Int
+		let columns: Int
+		let content: (Int, Int) -> Content
+		
+		var body: some View {
+			VStack {
+				ForEach(0 ..< rows, id: \.self) { row in
+					HStack {
+						ForEach(0 ..< self.columns, id: \.self) { column in
+							self.content(row, column)
+						}
+					}
+				}
+			}
+		}
+		
+		init(rows: Int, columns: Int, @ViewBuilder content: @escaping (Int, Int) -> Content) {
+			self.rows = rows
+			self.columns = columns
+			self.content = content
+		}
+	}
+	
+	
+	// row and col info is within the view
+	
+	struct EasyMap: View {
+		var body: some View {
+			GeometryReader { geometry in
+				GridStack(rows: 3, columns: 3) { row, col in
+					if(row == 0 && col == 0){
+						VStack {
+							Image(systemName: "star.circle")
+							Text("Starting Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else if(row == 0 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					}else if(row == 1 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 0 && col == 2){
+						VStack {
+							Image(systemName: "flag.circle")
+							Text("Finish")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else {
+						VStack{
+							//Image(systemName: "square")
+							
+							// This is the row and col info:
+							
+							//Text("R\(row) C\(col)")
+							Image("circle").hidden()
+							Text("Open Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.white)
+					}
+				}
+					//.border(Color.black)
+					.background(Color.clear)
+					.frame(width: geometry.size.width, height: geometry.size.height)
+			}
+		}
+	}
+	
+	struct MediumMap: View {
+		var body: some View {
+			GeometryReader { geometry in
+				GridStack(rows: 4, columns: 4) { row, col in
+					if(row == 0 && col == 0){
+						VStack {
+							Image(systemName: "star.circle")
+							Text("Starting Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else if(row == 3 && col == 0){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 0 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					}else if(row == 0 && col == 2){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 1 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 0 && col == 2){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 1 && col == 2){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 2 && col == 2){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					}else if(row == 0 && col == 3){
+						VStack {
+							Image(systemName: "flag.circle")
+							Text("Finish")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else {
+						VStack{
+							//Image(systemName: "square")
+							
+							// This is the row and col info:
+							
+							//Text("R\(row) C\(col)")
+							Image("circle").hidden()
+							Text("Open Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.white)
+					}
+				}
+					//.border(Color.black)
+					//.background(Color.white)
+					.frame(width: geometry.size.width, height: geometry.size.height)
+			}
+		}
+	}
+	
+	struct HardMap: View {
+		var body: some View {
+			GeometryReader { geometry in
+				GridStack(rows: 5, columns: 4) { row, col in
+					if(row == 0 && col == 0){
+						VStack {
+							Image(systemName: "star.circle")
+							Text("Starting Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else if(row == 0 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 1 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					}else if(row == 2 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 3 && col == 1){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 3 && col == 2){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 1 && col == 3){
+						VStack {
+							Image(systemName: "exclamationmark.octagon")
+							Text("Obstacle")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.red)
+					} else if(row == 0 && col == 3){
+						VStack {
+							Image(systemName: "flag.circle")
+							Text("Finish")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.green)
+					} else {
+						VStack{
+							//Image(systemName: "square")
+							
+							// This is the row and col info:
+							
+							//Text("R\(row) C\(col)")
+							Image("circle").hidden()
+							Text("Open Spot")
+						}
+						.frame(width: 120, height: 80)
+						.padding(.all, 0)
+						.background(Color.white)
+					}
+				}
+					.frame(width: geometry.size.width, height: geometry.size.height)
+			}
+		}
+	}
+	
+	struct MapArea: View {
+		let easyMap: Bool
+		let mediumMap: Bool
+		let hardMap: Bool
+		
+		var body: some View {
+			GeometryReader { geo in
+				HStack {
+					if self.easyMap{
+						EasyMap()
+							.frame(width: geo.size.width * 2, height: geo.size.height)
+					} else if self.mediumMap {
+						MediumMap()
+							.frame(width: geo.size.width * 2, height: geo.size.height)
+					} else if self.hardMap {
+						HardMap()
+							.frame(width: geo.size.width * 2, height: geo.size.height)
+					}
+				}
+			}
+		}
+	}
+}
 
 struct MazesView_Previews: PreviewProvider {
 	static var previews: some View {
