@@ -83,7 +83,7 @@ struct ContentView: View {
 								ZStack{
 									Rectangle()
 										.cornerRadius(12)
-									Text("Mazes")
+									Text("Example Maps")
 										.font(.largeTitle)
 										.fontWeight(.heavy)
 										.foregroundColor(.white)

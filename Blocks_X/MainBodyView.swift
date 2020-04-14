@@ -328,9 +328,9 @@ struct MainBodyView: View {
 		if let match = pickerMovement.commandFrames.firstIndex(where: {$0.contains(location)}){
 			if pickerMovement.activeCommands[match].0 != 13 {
 				
-//				if(timeRemaining == 1) {
-//					playSound(sound: "bad-sound", type: "mp3")
-//				}
+				if(timeRemaining == 1) {
+					playSound(sound: "bad-sound", type: "mp3")
+				}
 				return .bad
 			}
 			else {
@@ -342,15 +342,15 @@ struct MainBodyView: View {
 					if pickerMovement.activeCommands[pickerMovement.count].0 != 6 {
 						return .bad
 					} else {
-//						if(timeRemaining == 1) {
-//							playSound(sound: "good-sound", type: "mp3")
-//						}
+						if(timeRemaining == 1) {
+							playSound(sound: "good-sound", type: "mp3")
+						}
 						return .good
 					}
 				} else {
-//					if(timeRemaining == 1) {
-//						playSound(sound: "bad-sound", type: "mp3")
-//					}
+					if(timeRemaining == 1) {
+						playSound(sound: "bad-sound", type: "mp3")
+					}
 					return .bad
 				}
 			} else {
