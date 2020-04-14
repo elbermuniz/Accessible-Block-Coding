@@ -8,6 +8,8 @@
 
 import SwiftUI
 
+let controller = SpheroController()
+
 struct ContentView: View {
 	//@EnvironmentObject var pickerMovement: UserSettings
 	
@@ -151,6 +153,7 @@ struct ContentView: View {
 							,trailing:
 							Button(action: {
 								print("Robot Settings!")
+                                controller.connectToSpheroIfAvailable()
 							}) {
 								HStack {
 									Text("Robot Settings")

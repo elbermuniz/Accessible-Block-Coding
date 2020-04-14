@@ -195,7 +195,6 @@
 			files = (
 				72C98B91243E26EC003FD55B /* bad-sound.mp3 in Resources */,
 				72F162CD2437AB8E000AE52B /* .gitignore in Resources */,
-				7241D331243BF8B70071BB99 /* video.m4v in Resources */,
 				5F287D99243CF31000197A85 /* Sphere_(Shaded).png in Resources */,
 				72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */,
 				5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */,
@@ -350,14 +349,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = 4FN3JYM249;
+				DEVELOPMENT_TEAM = 73QVB8CZX6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.carlee";
+				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.brian";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -370,14 +369,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = 4FN3JYM249;
+				DEVELOPMENT_TEAM = 73QVB8CZX6;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.carlee";
+				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.brian";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
