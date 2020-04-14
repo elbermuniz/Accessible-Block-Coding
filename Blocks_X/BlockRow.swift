@@ -94,9 +94,11 @@ struct BlockRow: View {
 								.resizable()
 								.frame(width: 30, height: 30)
 								.foregroundColor(Color.white)
+                                .accessibility(hidden: true)
 						}
 						.zIndex(100)
 						.frame(width: 320, height: 50)
+                        .accessibilityElement(children: .combine)
 					}
 				}
 			} else {
@@ -113,7 +115,7 @@ struct BlockRow: View {
 							.foregroundColor(Color.white)
 							.zIndex(10)
 						//Image Instead
-						Image(systemName: blockVar.systemName)
+                        Image(systemName: blockVar.systemName)
 							.resizable()
 							.frame(width: 30, height: 30)
 							.foregroundColor(Color.white)
@@ -138,6 +140,9 @@ struct BlockRow: View {
 						self.dragAmount = .zero
 						}
 				)
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(label: Text(blockVar.name))
+                    .accessibility(hint: Text("Double click and hold to drag."))
 			}
 		}
 	}

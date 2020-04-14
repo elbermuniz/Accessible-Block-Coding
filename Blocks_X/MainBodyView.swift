@@ -44,20 +44,23 @@ struct MainBodyView: View {
 								.font(.title)
 								.foregroundColor(.white)
 								.padding(.trailing)
+                                .accessibility(hidden: true)
 						}
 						.background(Color.blue)
 						.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width)
+                        .accessibility(sortPriority: 2)
 						
 						//Comands are created on left side
 						VStack {
-							ForEach(0..<6){ number in
-								BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
+							ForEach(0..<4){ number in
+                                BlockRow(blockVar: blockData[self.commandList[number]], onChanged: self.commandMoved, onEnded: self.commandDropped, index: number, newMovement: 0)
 							}
 							.padding(-3.5)
 							.zIndex(30)
 						}
 						.zIndex(30)
 						.frame(width: 250, height: 525)
+                        .accessibility(sortPriority: 1)
 												
 						Spacer()
 						
@@ -76,6 +79,7 @@ struct MainBodyView: View {
 							.background(Color.blue)
 							.cornerRadius(90)
 							.zIndex(100)
+                            .accessibility(sortPriority: 0)
 							.accessibility(label: Text("Delete"))
 							.accessibility(hint: Text("Tap to delete all code."))
 						}
@@ -83,6 +87,8 @@ struct MainBodyView: View {
 					}
 					.frame(minWidth: geo.size.width * (0.25), maxWidth: geo.size.width, minHeight: geo.size.height * (0.25), maxHeight: geo.size.height)
 					.background(Color.gray)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 1)
 				}
 				.zIndex(20)
 				.frame(width: geometry.size.width * (0.3))
@@ -118,7 +124,6 @@ struct MainBodyView: View {
 								.foregroundColor(Color.white)
 								.padding(.top, 15)
 								.padding(.horizontal, 40)
-									
 								.zIndex(3)
 								Divider().background(Color.white)
 								Spacer()
@@ -136,6 +141,7 @@ struct MainBodyView: View {
 									.zIndex(4)
 							}
 							.zIndex(1)
+                            .accessibility(sortPriority: 1)
 							
 							Spacer()
 							
@@ -195,6 +201,8 @@ struct MainBodyView: View {
                                         .background(Color.blue)
                                         .cornerRadius(90)
                                         .zIndex(100)
+                                        .accessibility(label: Text("Erase"))
+                                        .accessibility(hint: Text("Tap to delete last command."))
                                     }
 									
 									Button(action: {
@@ -212,15 +220,19 @@ struct MainBodyView: View {
 										.background(Color.blue)
 										.cornerRadius(90)
 										.zIndex(100)
+                                        .accessibility(label: Text("Play"))
+                                        .accessibility(hint: Text("Double tap to run commands on Sphero."))
 									}
 								}
 								.padding([.bottom, .trailing], 20)
 							}
 							.zIndex(-1)
+                            .accessibility(sortPriority: 0)
 						}
 						.frame(minWidth: geo.size.width, maxWidth: geo.size.width, minHeight: 0, maxHeight: geo.size.height).background(Color(red: 0.6, green: 0.6, blue: 0.6, opacity: 0.2))
 						.border(/*@START_MENU_TOKEN@*/Color.white/*@END_MENU_TOKEN@*/, width: 7)
 						.zIndex(0)
+                        .accessibilityElement(children: .contain)
 					}
 					// Bottom row of buttons
 					
@@ -229,12 +241,14 @@ struct MainBodyView: View {
 				.background(Color.black)
 				.frame(width: geometry.size.width * (0.70))
 				.offset(x: -7.5)
+                .accessibility(sortPriority: 0)
 				// End of main drop area
 				
 				Spacer()
 			}
 			.frame(width: geometry.size.width)
 			.onAppear(perform: self.startApp)
+            .accessibilityElement(children: .contain)
 			.onReceive(self.timer) { _ in
 				if self.timeRemaining > 0 {
 					self.timeRemaining -= 1
