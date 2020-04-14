@@ -67,18 +67,21 @@ extension MazesView {
 						Text("Show Easy Map")
 							.fontWeight(.heavy)
 							.padding(.leading, 5)
+                            .accessibility(hidden: true)
 					}.padding(.all, 7)
 					Divider()
 					Toggle(isOn: on2) {
 						Text("Show Medium Map")
 							.fontWeight(.heavy)
 							.padding(.leading, 5)
+                            .accessibility(hidden: true)
 					}.padding(.all, 7)
 					Divider()
 					Toggle(isOn: on3) {
 						Text("Show Hard Map")
 							.fontWeight(.heavy)
 							.padding(.leading, 5)
+                            .accessibility(hidden: true)
 					}.padding(.all, 7)
 				}
 				.foregroundColor(.white)
@@ -132,36 +135,49 @@ extension MazesView {
 				GridStack(rows: 3, columns: 3) { row, col in
 					if(row == 0 && col == 0){
 						VStack {
-							Image(systemName: "star.circle")
+                            Image(systemName: "star.circle")
+                                .accessibility(hidden: true)
 							Text("Starting Spot")
+                                .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
+                        
 					} else if(row == 0 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                                .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					}else if(row == 1 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                                .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 0 && col == 2){
 						VStack {
 							Image(systemName: "flag.circle")
+                                .accessibility(hidden: true)
 							Text("Finish")
+                                .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
 					} else {
 						VStack{
 							//Image(systemName: "square")
@@ -169,12 +185,15 @@ extension MazesView {
 							// This is the row and col info:
 							
 							//Text("R\(row) C\(col)")
+                            
 							Image("circle").hidden()
 							Text("Open Spot")
+                                .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.white)
+                        .accessibilityElement(children: .combine)
 					}
 				}
 					//.border(Color.black)
@@ -191,75 +210,102 @@ extension MazesView {
 					if(row == 0 && col == 0){
 						VStack {
 							Image(systemName: "star.circle")
+                                .accessibility(hidden: true)
 							Text("Starting Spot")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 3 && col == 0){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 0 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					}else if(row == 0 && col == 2){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
-						.background(Color.red)
+                        .background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 1 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 0 && col == 2){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 1 && col == 2){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 2 && col == 2){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					}else if(row == 0 && col == 3){
 						VStack {
 							Image(systemName: "flag.circle")
+                                .accessibility(hidden: true)
 							Text("Finish")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
 					} else {
 						VStack{
 							//Image(systemName: "square")
@@ -269,10 +315,12 @@ extension MazesView {
 							//Text("R\(row) C\(col)")
 							Image("circle").hidden()
 							Text("Open Spot")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.white)
+                        .accessibilityElement(children: .combine)
 					}
 				}
 					//.border(Color.black)
@@ -289,67 +337,91 @@ extension MazesView {
 					if(row == 0 && col == 0){
 						VStack {
 							Image(systemName: "star.circle")
+                                .accessibility(hidden: true)
 							Text("Starting Spot")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 0 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 1 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					}else if(row == 2 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 3 && col == 1){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 3 && col == 2){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 1 && col == 3){
 						VStack {
 							Image(systemName: "exclamationmark.octagon")
+                                .accessibility(hidden: true)
 							Text("Obstacle")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.red)
+                        .accessibilityElement(children: .combine)
 					} else if(row == 0 && col == 3){
 						VStack {
 							Image(systemName: "flag.circle")
+                                .accessibility(hidden: true)
 							Text("Finish")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.green)
+                        .accessibilityElement(children: .combine)
 					} else {
 						VStack{
 							//Image(systemName: "square")
@@ -359,10 +431,12 @@ extension MazesView {
 							//Text("R\(row) C\(col)")
 							Image("circle").hidden()
 							Text("Open Spot")
+                            .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
 						.frame(width: 120, height: 80)
 						.padding(.all, 0)
 						.background(Color.white)
+                        .accessibilityElement(children: .combine)
 					}
 				}
 					.frame(width: geometry.size.width, height: geometry.size.height)
