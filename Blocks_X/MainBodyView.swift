@@ -267,7 +267,7 @@ struct MainBodyView: View {
 				commands.append((pickerMovement.activeCommands[value].0, pickerMovement.activeCommands[value].1))
 			}
 		}
-		var currHeading = 0
+        var currHeading : UInt16 = 0
 		for index in 0..<commands.count {
 
 			if(commands[index].commandType == 7) { // Move Forward
@@ -281,10 +281,12 @@ struct MainBodyView: View {
 			} else if(commands[0].commandType == 9) { // Turn Right
 				//Turn Right
 				controller.turnRight(heading: UInt16(commands[index].unit))
+                currHeading = currHeading + UInt16(commands[index].unit)
 
 			} else if(commands[0].commandType == 10) { // Turn Left
 				//Turn Left
 				controller.turnLeft(heading: UInt16(commands[index].unit))
+                currHeading = currHeading - UInt16(commands[index].unit)
 			}
             sleep(2)
 		}
