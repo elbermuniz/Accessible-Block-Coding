@@ -260,11 +260,6 @@ struct MainBodyView: View {
 	}
 	
 	func playCommands() {
-		//let spheroController = SpheroController()
-		//spheroController.connectToSpheroIfAvailable()
-		
-		sleep(10)
-		
 		var commands: [(commandType: Int, unit: Int)] = []
 		for value in 0..<30 {
 			if(pickerMovement.activeCommands[value].0 != 6 && pickerMovement.activeCommands[value].0 != 11){
@@ -272,32 +267,27 @@ struct MainBodyView: View {
 				commands.append((pickerMovement.activeCommands[value].0, pickerMovement.activeCommands[value].1))
 			}
 		}
-		
-//		for index in 0..<commands.count {
-//
-//			if(commands[index].commandType == 7) { // Move Forward
-//				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
-//
-//			} else if(commands[0].commandType == 8) { // Move Backwards
-//				// Spin 180 degrees
-//				spheroController.turnRight(heading: UInt16(180))
-//				spheroController.rollDistance(distance: Double(commands[index].unit), heading: 0)
-//
-//			} else if(commands[0].commandType == 9) { // Turn Right
-//				//Turn Right
-//				spheroController.turnRight(heading: UInt16(commands[index].unit))
-//
-//			} else if(commands[0].commandType == 10) { // Turn Left
-//				//Turn Left
-//				spheroController.turnLeft(heading: UInt16(commands[index].unit))
-//
-//			} else if(commands[0].commandType == 12) { // Set Color
-//				// Set Color
-//				// spheroController.rearLedBrightness(UInt8(commands[index].unit))
-//				// Not sure
-//			}
-//
-//		}
+		var currHeading = 0
+		for index in 0..<commands.count {
+
+			if(commands[index].commandType == 7) { // Move Forward
+				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading)
+
+			} else if(commands[0].commandType == 8) { // Move Backwards
+				// Spin 180 degrees
+				
+				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading + 180)
+
+			} else if(commands[0].commandType == 9) { // Turn Right
+				//Turn Right
+				controller.turnRight(heading: UInt16(commands[index].unit))
+
+			} else if(commands[0].commandType == 10) { // Turn Left
+				//Turn Left
+				controller.turnLeft(heading: UInt16(commands[index].unit))
+			}
+            sleep(2)
+		}
 //		self.pickerMovement.activeCommands = [(Int, Int)]  (repeating: (6,0), count: 30)
 //		self.pickerMovement.count = 0
 	}
