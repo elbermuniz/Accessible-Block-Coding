@@ -269,24 +269,25 @@ struct MainBodyView: View {
 		}
         var currHeading : UInt16 = 0
 		for index in 0..<commands.count {
-
+            print("current stuff :" + String(commands[0].commandType))
 			if(commands[index].commandType == 7) { // Move Forward
 				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading)
 
-			} else if(commands[0].commandType == 8) { // Move Backwards
+			} else if(commands[index].commandType == 8) { // Move Backwards
 				// Spin 180 degrees
 				
 				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading + 180)
 
-			} else if(commands[0].commandType == 9) { // Turn Right
+			} else if(commands[index].commandType == 9) { // Turn Right
 				//Turn Right
+                print("Turn Right from: " + String(currHeading) + "by: " + String(commands[index].unit))
 				controller.turnRight(heading: UInt16(commands[index].unit))
                 currHeading = currHeading + UInt16(commands[index].unit)
 
-			} else if(commands[0].commandType == 10) { // Turn Left
+			} else if(commands[index].commandType == 10) { // Turn Left
 				//Turn Left
 				controller.turnLeft(heading: UInt16(commands[index].unit))
-                currHeading = currHeading - UInt16(commands[index].unit)
+                currHeading = currHeading + 360 + UInt16(commands[index].unit)
 			}
             sleep(2)
 		}
