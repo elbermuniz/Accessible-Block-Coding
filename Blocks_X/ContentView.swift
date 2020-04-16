@@ -8,9 +8,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
-	//@EnvironmentObject var pickerMovement: UserSettings
-	
+struct ContentView: View {	
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
 	@State private var mazesShowing = false

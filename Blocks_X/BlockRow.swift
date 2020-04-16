@@ -15,7 +15,6 @@ enum DragState{
 }
 
 struct BlockRow: View {
-	@EnvironmentObject var pickerMovement: UserSettings
 	@State private var dragState = DragState.unknown
 	@State private var dragAmount = CGSize.zero
 	
@@ -102,18 +101,20 @@ struct BlockRow: View {
 					}
 				}
 			} else {
+				
+// This builds the draggable command blocks. It is a ZStack with a rectangle at the bottom and an Image and Text over it.
 				ZStack {
 					Rectangle()
 						.cornerRadius(12)
 						.frame(width: 200, height: 70)
-						.zIndex(-10)
+						.zIndex(-1)
 						.foregroundColor(blockColor(bColor: blockVar.color))
 					HStack {
 						Text(blockVar.name)
 							.font(.headline)
 							.fontWeight(.heavy)
 							.foregroundColor(Color.white)
-							.zIndex(10)
+							.zIndex(2)
 						//Image Instead
                         Image(systemName: blockVar.systemName)
 							.resizable()
@@ -124,7 +125,8 @@ struct BlockRow: View {
 					.frame(width: 200, height: 70)
 					.padding(.vertical, 5)
 				}
-					//Drag & Drop Functionality
+
+// Drag & Drop Functionality applied to the draggable command block. The offset is controlled by dragAmount which is updated whenever the element is moved. The dragColor is based off of the dragState, which is updated whenever the position of the selected command block changes. Index is used to replace the command from the list of commands whenever it is dropped.
 					.offset(dragAmount)
 					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
 					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)

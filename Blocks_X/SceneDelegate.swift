@@ -11,15 +11,15 @@ import SwiftUI
 
 class UserSettings: ObservableObject {
 	@Published var value = 0
-	@Published var activeCommands = [(Int, Int)] (repeating: (6,0), count: 30) // contains the actual blocks in list
-	@Published var commandFrames = [CGRect](repeating: .zero, count: 1) //( the frame of the list area
+	@Published var scrollViewCommands = [(Int, Int)] (repeating: (6,0), count: 30) // contains the actual blocks in list
+	@Published var scrollViewFrame = [CGRect](repeating: .zero, count: 1) //( the frame of the list area
 	@Published var count = 0 // keeps track of which block has been filled in the list
 }
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-	var pickerMovement = UserSettings()
+	var globalVariables = UserSettings()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -34,8 +34,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-//			window.rootViewController = UIHostingController(rootView: ContentView(block: blockData[0]).environmentObject(pickerMovement))
-			window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(pickerMovement))
+//			window.rootViewController = UIHostingController(rootView: ContentView(block: blockData[0]).environmentObject(globalVariables))
+			window.rootViewController = UIHostingController(rootView: ContentView().environmentObject(globalVariables))
             self.window = window
             window.makeKeyAndVisible()
         }
