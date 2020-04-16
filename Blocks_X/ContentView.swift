@@ -11,8 +11,7 @@ import SwiftUI
 let controller = SpheroController()
 
 struct ContentView: View {
-	//@EnvironmentObject var pickerMovement: UserSettings
-	
+  
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
 	@State private var mazesShowing = false

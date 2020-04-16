@@ -349,14 +349,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = 73QVB8CZX6;
+				DEVELOPMENT_TEAM = 832BT62933;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.brian";
+				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -369,14 +369,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = 73QVB8CZX6;
+				DEVELOPMENT_TEAM = 832BT62933;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X.brian";
+				PRODUCT_BUNDLE_IDENTIFIER = "COMP523.Blocks-X";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
