@@ -8,7 +8,10 @@
 
 import SwiftUI
 
-struct ContentView: View {	
+let controller = SpheroController()
+
+struct ContentView: View {
+  
 	@State private var playgroundShowing = false
 	@State private var tutorialShowing = false
 	@State private var mazesShowing = false
@@ -149,6 +152,7 @@ struct ContentView: View {
 							,trailing:
 							Button(action: {
 								print("Robot Settings!")
+                                controller.connectToSpheroIfAvailable()
 							}) {
 								HStack {
 									Text("Robot Settings")

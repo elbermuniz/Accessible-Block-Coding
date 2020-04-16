@@ -264,15 +264,38 @@ struct MainBodyView: View {
 	}
 	
 	func playCommands() {
-		
 		sleep(10)
-		
 		var commands: [(commandType: Int, unit: Int)] = []
 		for value in 0..<30 {
 			if(globalVariables.scrollViewCommands[value].0 != 6 && globalVariables.scrollViewCommands[value].0 != 11){
 				print(globalVariables.scrollViewCommands[value])
 				commands.append((globalVariables.scrollViewCommands[value].0, globalVariables.scrollViewCommands[value].1))
 			}
+		}
+
+        var currHeading : UInt16 = 0
+		for index in 0..<commands.count {
+            print("current stuff :" + String(commands[0].commandType))
+			if(commands[index].commandType == 7) { // Move Forward
+				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading)
+
+			} else if(commands[index].commandType == 8) { // Move Backwards
+				// Spin 180 degrees
+				
+				controller.rollDistance(distance: Double(commands[index].unit), heading: currHeading + 180)
+
+			} else if(commands[index].commandType == 9) { // Turn Right
+				//Turn Right
+                print("Turn Right from: " + String(currHeading) + "by: " + String(commands[index].unit))
+				controller.turnRight(heading: UInt16(commands[index].unit))
+                currHeading = currHeading + UInt16(commands[index].unit)
+
+			} else if(commands[index].commandType == 10) { // Turn Left
+				//Turn Left
+				controller.turnLeft(heading: UInt16(commands[index].unit))
+                currHeading = currHeading + 360 - UInt16(commands[index].unit)
+			}
+            sleep(2)
 		}
 	}
 	
