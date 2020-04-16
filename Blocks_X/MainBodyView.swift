@@ -287,7 +287,7 @@ struct MainBodyView: View {
 			} else if(commands[index].commandType == 10) { // Turn Left
 				//Turn Left
 				controller.turnLeft(heading: UInt16(commands[index].unit))
-                currHeading = currHeading + 360 + UInt16(commands[index].unit)
+                currHeading = currHeading + 360 - UInt16(commands[index].unit)
 			}
             sleep(2)
 		}
