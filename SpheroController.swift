@@ -30,6 +30,7 @@ extension CommandType {
         return value
     }
     
+    // Builds packet for sending to Sphero
     func dataForPacket(sequenceNumber: UInt8 = 0) -> Data {
         let payloadLength = payload?.count ?? 0
         var zero: UInt8 = 0
@@ -161,6 +162,12 @@ struct RollCommand: SpheroCommandType {
 }
 
 public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
+    
+    /* Changes the brightness of the rear LED
+     * Useful for testing connection code
+     * Input: UInt8 value
+     * Output: None
+     */
     public var rearLedBrightness: UInt8 = 0 {
         didSet {
             let brightnessCommand = SetBackLEDBrightness(brightness: rearLedBrightness)
@@ -168,13 +175,19 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
     }
     
+    /* Rolls in terms of abstract velocity units and heading degrees
+     * Note: degrees is relative to the Sphero's internal 0 heading
+     * Input: UInt8 velocity, UInt16 heading
+     * Output: None
+     */
     public func roll(velocity: UInt8, heading: UInt16) {
         let rollCommand = RollCommand(speed: velocity, heading: heading)
         sphero.availablePeripheral?.writeValue(rollCommand.dataForPacket(), for:
             commandsCharacteristic, type: .withResponse)
     }
     
-    // Distance is represented by meters
+    // Same as the roll function, but operates in terms of meters
+    // Mapping from distance to velocity unit breaks down at higher distances
     public func rollDistance(distance: Double, heading: UInt16) {
         let distUnits: UInt8 = (UInt8) (distance * 50)
         let rollCommand = RollCommand(speed: distUnits, heading: heading)
@@ -182,6 +195,10 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
             commandsCharacteristic, type: .withResponse)
     }
     
+    /* Turn left by some degrees, automatically clamps to 360 degrees
+     * Input: UInt16 Degree Turn Left
+     * Output: None
+     */
     public func turnLeft(heading: UInt16) {
         let clampedHeading = 360 - (heading % 360)
         let rollCommand = RollCommand(speed: 0, heading: clampedHeading)
@@ -189,6 +206,10 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
             commandsCharacteristic, type: .withResponse)
     }
     
+    /* Turn right by some degrees, automatically clamps to 360 degrees
+    * Input: UInt16 Degree Turn Right
+    * Output: None
+    */
     public func turnRight(heading: UInt16) {
         let clampedHeading = heading % 360
         let rollCommand = RollCommand(speed: 0, heading: clampedHeading)
@@ -219,11 +240,15 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
     }
     
+    // Top-Level Services for the Sphero SPRK+
+    // DO NOT CHANGE THESE
     private enum Service {
         static let BLE = CBUUID(string: "22bb746f-2bb0-7554-2d6f-726568705327")
         static let RobotControl = CBUUID(string: "22bb746f-2ba0-7554-2d6f-726568705327")
     }
     
+    // Characteristics split by service for the Sphero SPRK+
+    // DO NOT CHANGE THESE
     private enum Characteristic {
         // BLE service
         static let Wake = CBUUID(string: "22bb746f-2bbf-7554-2d6f-726568705327")
@@ -244,6 +269,8 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
     
     private var sphero: Peripheral = .none
     
+    // Switch for central manager updates
+    // Can expand on these if necessary
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn:
@@ -266,6 +293,8 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
     }
     
     var peripherals: [CBPeripheral: Int] = [:]
+    
+    // Event handlers for each central manager event
     
     public func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         peripherals[peripheral] = RSSI.intValue
@@ -300,6 +329,8 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
     public func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
 		print("Failed: \(String(describing: error))")
     }
+    
+    // Event handlers for each peripheral event
     
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         guard let services = peripheral.services else {
@@ -376,6 +407,10 @@ public class SpheroController: NSObject, CBCentralManagerDelegate, CBPeripheralD
         }
     }
     
+    /* Calling disconnect when you're done with the Sphero
+     * is not necessary once you close the app, but it's good
+     * practice to disconnect when you are done with it
+     */
     public func disconnect() {
         if let sphero = sphero.availablePeripheral {
             central.cancelPeripheralConnection(sphero)
