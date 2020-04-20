@@ -42,7 +42,7 @@ struct ContentView: View {
 						
 						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
 							HStack{
-								Text("CodeSphere")
+								Text("BlockX")
 									.fontWeight(.light)
 									.shadow(color: Color.blue, radius: 15)
 									.shadow(color: Color.white, radius: 5)
