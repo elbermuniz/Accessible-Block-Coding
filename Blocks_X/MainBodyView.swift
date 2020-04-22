@@ -18,6 +18,7 @@ struct MainBodyView: View {
 	@State private var enableDegreePicker = false
 	@State private var enableColorPicker = false
 	@State var timeRemaining = 3
+    @State private var currHeading: UInt16 = 0
 	
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 	
@@ -264,7 +265,6 @@ struct MainBodyView: View {
 	}
 	
 	func playCommands() {
-		sleep(10)
 		var commands: [(commandType: Int, unit: Int)] = []
 		for value in 0..<30 {
 			if(globalVariables.scrollViewCommands[value].0 != 6 && globalVariables.scrollViewCommands[value].0 != 11){
@@ -273,7 +273,6 @@ struct MainBodyView: View {
 			}
 		}
 
-        var currHeading : UInt16 = 0
 		for index in 0..<commands.count {
             print("current stuff :" + String(commands[0].commandType))
 			if(commands[index].commandType == 7) { // Move Forward

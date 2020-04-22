@@ -155,7 +155,7 @@ struct ContentView: View {
                                 controller.connectToSpheroIfAvailable()
 							}) {
 								HStack {
-									Text("Robot Settings")
+									Text("Connect Robot")
 										.fontWeight(.semibold)
 										.font(.headline)
 									Image(systemName: "gear")
