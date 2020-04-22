@@ -34,7 +34,6 @@ struct TutorialView: View {
 	var body: some View {
 		GeometryReader { geometry in
 			VStack {
-				Spacer()
 				Text("Tutorial Video")
 					.font(.title)
 					.fontWeight(.heavy)
@@ -43,7 +42,17 @@ struct TutorialView: View {
 				Spacer()
 				
 				Button(action: { self.showVideoPlayer = true }) {
-					Text("Start video").font(.title)
+					Text("User video").font(.title)
+				}
+				.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
+					AVPlayerView(videoURL: self.$vURL)
+						.edgesIgnoringSafeArea(.all)
+						.environmentObject(self.playerState)
+				}
+				Spacer()
+				
+				Button(action: { self.showVideoPlayer = true }) {
+					Text("Administrator/Teacher video").font(.title)
 				}
 				.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
 					AVPlayerView(videoURL: self.$vURL)

@@ -179,9 +179,7 @@ extension MazesView {
 						.background(Color.green)
                         .accessibilityElement(children: .combine)
 					} else {
-						VStack{
-							//Image(systemName: "square")
-							
+						VStack{							
 							// This is the row and col info:
 							
 							//Text("R\(row) C\(col)")
@@ -308,8 +306,6 @@ extension MazesView {
                         .accessibilityElement(children: .combine)
 					} else {
 						VStack{
-							//Image(systemName: "square")
-							
 							// This is the row and col info:
 							
 							//Text("R\(row) C\(col)")
@@ -323,8 +319,6 @@ extension MazesView {
                         .accessibilityElement(children: .combine)
 					}
 				}
-					//.border(Color.black)
-					//.background(Color.white)
 					.frame(width: geometry.size.width, height: geometry.size.height)
 			}
 		}
