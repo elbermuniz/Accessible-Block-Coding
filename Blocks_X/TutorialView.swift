@@ -27,41 +27,74 @@ class PlayerState: ObservableObject {
 
 struct TutorialView: View {
 	@EnvironmentObject var playerState : PlayerState
-    @State private var vURL = URL(string: "https://www.radiantmediaplayer.com/media/bbb-360p.mp4")
-
+	@State private var vURL = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: ".m4v")!)
 	@State private var showVideoPlayer = false
 	
+	let gradient = Gradient(colors: [.gray, .black])
+
 	var body: some View {
 		GeometryReader { geometry in
-			VStack {
-				Text("Tutorial Video")
-					.font(.title)
-					.fontWeight(.heavy)
-					.multilineTextAlignment(.center)
-					.padding(.vertical, 10.0)
-				Spacer()
+			ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
+				Rectangle()
+					.fill(
+						RadialGradient(gradient: self.gradient, center: .center, startRadius: 1, endRadius: 1100)
+				).edgesIgnoringSafeArea(.all)
 				
-				Button(action: { self.showVideoPlayer = true }) {
-					Text("User video").font(.title)
+				VStack {
+					Text("Tutorial Video")
+						.fontWeight(.light)
+						.shadow(color: Color.blue, radius: 15)
+						.shadow(color: Color.white, radius: 5)
+						.multilineTextAlignment(.center)
+						.padding(.top, 10.0)
+						.font(.system(size: 72))
+						.foregroundColor(.white)
+					Spacer()
+					
+					Button(action: { self.showVideoPlayer = true }) {
+						ZStack{
+							Rectangle()
+								.cornerRadius(12)
+							Text("User video")
+								.font(.largeTitle)
+								.fontWeight(.heavy)
+								.foregroundColor(.white)
+						}
+					}
+					.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
+						AVPlayerView(videoURL: self.$vURL)
+							.edgesIgnoringSafeArea(.all)
+							.environmentObject(self.playerState)
+					}
+					.shadow(color: Color.blue, radius: 10)
+					.shadow(color: Color.white, radius: 10)
+					.frame(width: 400, height: 120)
+					
+					Spacer()
+					
+					Button(action: { self.showVideoPlayer = true }) {
+						ZStack{
+							Rectangle()
+								.cornerRadius(12)
+							Text("Administrator/ \nTeacher video")
+								.font(.largeTitle)
+								.fontWeight(.heavy)
+								.foregroundColor(.white)
+						}
+					}
+					.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
+						AVPlayerView(videoURL: self.$vURL)
+							.edgesIgnoringSafeArea(.all)
+							.environmentObject(self.playerState)
+					}
+					.shadow(color: Color.blue, radius: 10)
+					.shadow(color: Color.white, radius: 10)
+					.frame(width: 400, height: 120)
+					
+					Spacer()
 				}
-				.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
-					AVPlayerView(videoURL: self.$vURL)
-						.edgesIgnoringSafeArea(.all)
-						.environmentObject(self.playerState)
-				}
-				Spacer()
-				
-				Button(action: { self.showVideoPlayer = true }) {
-					Text("Administrator/Teacher video").font(.title)
-				}
-				.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
-					AVPlayerView(videoURL: self.$vURL)
-						.edgesIgnoringSafeArea(.all)
-						.environmentObject(self.playerState)
-				}
-				Spacer()
+				.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height)
 			}
-			.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height).background(Color.gray)
 		}
 	}
 }
@@ -70,7 +103,7 @@ struct TutorialView: View {
 struct AVPlayerView: UIViewControllerRepresentable {
 
     @EnvironmentObject var playerState : PlayerState
-    @Binding var videoURL: URL?
+    @Binding var videoURL: URL
 
     func updateUIViewController(_ playerController: AVPlayerViewController, context: Context) {
     }
@@ -78,7 +111,7 @@ struct AVPlayerView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let playerController = AVPlayerViewController()
         playerController.modalPresentationStyle = .fullScreen
-        playerController.player = playerState.player(for: videoURL!)
+        playerController.player = playerState.player(for: videoURL)
         playerController.player?.play()
         return playerController
     }

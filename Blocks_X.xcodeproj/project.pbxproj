@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5F287D99243CF31000197A85 /* Sphere_(Shaded).png in Resources */ = {isa = PBXBuildFile; fileRef = 5F287D98243CF31000197A85 /* Sphere_(Shaded).png */; };
 		5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F287D9C243CF93500197A85 /* LaunchScreen.storyboard */; };
+		72118C21245226B600F4CE72 /* video.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7241D330243BF80B0071BB99 /* video.m4v */; };
 		724051612434D5B50020D98E /* SpheroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724051602434D5B50020D98E /* SpheroController.swift */; };
 		724F7AF4242BBD8000AC94AB /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF3242BBD8000AC94AB /* TutorialView.swift */; };
 		724F7AF6242BC63700AC94AB /* MainBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF5242BC63700AC94AB /* MainBodyView.swift */; };
@@ -197,6 +198,7 @@
 				72F162CD2437AB8E000AE52B /* .gitignore in Resources */,
 				5F287D99243CF31000197A85 /* Sphere_(Shaded).png in Resources */,
 				72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */,
+				72118C21245226B600F4CE72 /* video.m4v in Resources */,
 				5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */,
 				72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */,
 				72C98B95243E2F54003FD55B /* good-sound.mp3 in Resources */,

@@ -423,7 +423,7 @@ extension MazesView {
 							// This is the row and col info:
 							
 							//Text("R\(row) C\(col)")
-							Image("circle").hidden()
+							Image("flag.circle").hidden()
 							Text("Open Spot")
                             .accessibility(value: Text("Row \(row) Column \(col)"))
 						}
