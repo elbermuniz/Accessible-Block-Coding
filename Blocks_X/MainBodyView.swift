@@ -21,9 +21,7 @@ struct MainBodyView: View {
     @State private var currHeading: UInt16 = 0
 	
 	let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-	
-	//let spheroController = SpheroController()
-	
+		
 	var body: some View {
 		GeometryReader { geometry in
 			HStack {
@@ -152,22 +150,6 @@ struct MainBodyView: View {
 							
 							VStack {
 								HStack(spacing: 0.0) {
-									//Spacer()
-									Button(action: {
-										print("Volume tapped!")
-									}) {
-										VStack {
-											Image(systemName: "speaker.3")
-												.font(.title)
-												.padding(.vertical, 5)
-										}
-										.padding()
-										.foregroundColor(.white)
-										.background(Color.blue)
-										.cornerRadius(90)
-										.zIndex(100)
-									}
-									
 									Button(action: {
 										print("Help tapped!")
 									}) {
@@ -239,7 +221,6 @@ struct MainBodyView: View {
 						.zIndex(0)
                         .accessibilityElement(children: .contain)
 					}
-					// Bottom row of buttons
 					
 				}
 				.zIndex(-1)
@@ -299,7 +280,7 @@ struct MainBodyView: View {
 	}
 	
 	func increaseCount() {
-		print("Build count: ", globalVariables.count)
+		print("Count: ", globalVariables.count)
 		globalVariables.count = globalVariables.count+1
 	}
 	

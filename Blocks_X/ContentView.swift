@@ -24,14 +24,11 @@ struct ContentView: View {
 			GeometryReader { geometry in
 				NavigationView {
 					ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-						//Color.black.edgesIgnoringSafeArea(.all)
 						Rectangle()
 							.fill(
 								RadialGradient(gradient: self.gradient, center: .center, startRadius: 1, endRadius: 1100)
 						).edgesIgnoringSafeArea(.all)
-						
-						// A card-like view that is initially offscreen,
-						// and slides on when detailShowing == true
+
 						if(self.playgroundShowing){
 							MainBodyView()
 						} else if(self.tutorialShowing){
@@ -40,7 +37,7 @@ struct ContentView: View {
 							MazesView()
 						}
 						
-						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){
+						if(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing){ // Main home page view
 							HStack{
 								Text("BlockX")
 									.fontWeight(.light)
@@ -51,13 +48,16 @@ struct ContentView: View {
 							.padding(.top, 30.0)
 							.font(.system(size: 100))
 							.foregroundColor(.white)
+							.accessibility(label: Text("BlockX"))
+							.accessibility(hint: Text("Application Title"))
+							.accessibility(hidden: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? true: false)
 						}
 						
 						VStack{
-							// Just here to change state
 							Spacer()
 							Spacer()
 							
+							// When playground button is toggled, home view slides away and displays playground view.
 							Button(action: {
 								self.playgroundShowing.toggle()
 							}) {
@@ -76,8 +76,12 @@ struct ContentView: View {
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
 							.padding()
+							.accessibility(label: Text("Playground"))
+							.accessibility(hint: Text("Tap to open the coding playground."))
+							.accessibility(hidden: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? true: false)
 							
 							
+							// When example maps button is toggled, home view slides away and displays example maps view.
 							Button(action: {
 								self.mazesShowing.toggle()
 							}) {
@@ -96,9 +100,12 @@ struct ContentView: View {
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
 							.padding()
+							.accessibility(label: Text("Example maps"))
+							.accessibility(hint: Text("Tap to view the example maps."))
+							.accessibility(hidden: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? true: false)
 
 							
-							
+							// When tutorial button is toggled, home view slides away and displays tutorial view.
 							Button(action: {
 								self.tutorialShowing.toggle()
 							}) {
@@ -117,6 +124,9 @@ struct ContentView: View {
 							.frame(width: 400, height: 120)
 							.offset(x: 0, y: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? geometry.size.height : 0)
 							.padding()
+							.accessibility(label: Text("Tutorial"))
+							.accessibility(hint: Text("Tap to view the app tutorial."))
+							.accessibility(hidden: self.playgroundShowing || self.tutorialShowing || self.mazesShowing ? true: false)
 
 							
 							Spacer()
@@ -130,8 +140,8 @@ struct ContentView: View {
 								.font(.system(size: 16))
 								.foregroundColor(.white)
 							}}
-					}
-						// This is the key modifier
+						}
+						// This the navigation menu across the entire application
 						.navigationBarHidden(!self.playgroundShowing && !self.tutorialShowing && !self.mazesShowing)
 						.navigationBarTitle("Welcome!", displayMode: .inline)
 						.navigationBarItems(leading:
@@ -151,11 +161,11 @@ struct ContentView: View {
 							}
 							,trailing:
 							Button(action: {
-								print("Robot Settings!")
-                                controller.connectToSpheroIfAvailable()
+								print("Sync Robot!")
+                controller.connectToSpheroIfAvailable()
 							}) {
 								HStack {
-									Text("Connect Robot")
+									Text("Sync Robot")
 										.fontWeight(.semibold)
 										.font(.headline)
 									Image(systemName: "gear")
@@ -179,7 +189,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider { //doesn't execute in app
 	static var previews: some View {
-		//ContentView(block: blockData[0])
 		ContentView()
 	}
 }

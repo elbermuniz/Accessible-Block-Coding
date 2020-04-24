@@ -26,7 +26,7 @@ struct BlockRow: View {
 	
 	var body: some View {
 		ZStack {
-			if (blockVar.name == "Drop Area") {
+			if (blockVar.name == "Drop Area") { // Handles the block which creates the drop area
 				ZStack {
 					Rectangle()
 						.foregroundColor(.gray)
@@ -44,7 +44,7 @@ struct BlockRow: View {
 						.zIndex(5)
 						.frame(width:50, height: 200)
 				}
-			} else if(blockVar.color == "clear"){
+			} else if(blockVar.color == "clear"){ // Handles the empty blocks that make up the Scroll View
 				ZStack {
 					Rectangle()
 						.foregroundColor(.clear)
@@ -53,7 +53,7 @@ struct BlockRow: View {
 				}
 				.frame(width:300)
 				.padding(.horizontal, 5)
-			} else if (blockVar.category.rawValue == "Dropped") {
+			} else if (blockVar.category.rawValue == "Dropped") { // Handles when a command block is dropped
 				if (newMovement == 0){
 					Text("").hidden()
 				} else {
@@ -101,8 +101,7 @@ struct BlockRow: View {
 					}
 				}
 			} else {
-				
-// This builds the draggable command blocks. It is a ZStack with a rectangle at the bottom and an Image and Text over it.
+				// This builds the draggable command blocks. It is a ZStack with a rectangle at the bottom and an Image and Text over it.
 				ZStack {
 					Rectangle()
 						.cornerRadius(12)
@@ -126,7 +125,7 @@ struct BlockRow: View {
 					.padding(.vertical, 5)
 				}
 
-// Drag & Drop Functionality applied to the draggable command block. The offset is controlled by dragAmount which is updated whenever the element is moved. The dragColor is based off of the dragState, which is updated whenever the position of the selected command block changes. Index is used to replace the command from the list of commands whenever it is dropped.
+					// Drag & Drop Functionality applied to the draggable command block. The offset is controlled by dragAmount which is updated whenever the element is moved. The dragColor is based off of the dragState, which is updated whenever the position of the selected command block changes. Index is used to replace the command from the list of commands whenever it is dropped.
 					.offset(dragAmount)
 					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
 					.shadow(color: dragColor, radius: dragAmount == .zero ? 0 : 10)
