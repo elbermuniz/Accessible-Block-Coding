@@ -162,7 +162,7 @@ struct ContentView: View {
 							,trailing:
 							Button(action: {
 								print("Sync Robot!")
-                                controller.connectToSpheroIfAvailable()
+                controller.connectToSpheroIfAvailable()
 							}) {
 								HStack {
 									Text("Sync Robot")
