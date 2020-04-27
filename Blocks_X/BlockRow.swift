@@ -36,7 +36,7 @@ struct BlockRow: View {
 								.stroke(blockColor(bColor: blockVar.color), style: StrokeStyle(lineWidth: 4, dash: [10]))
 					)
 					Text("Drag and drop commands into this area!")
-						.font(.title)
+						.font(.system(size: 22))
 						.fontWeight(.heavy)
 						.foregroundColor(Color.white)
 						.multilineTextAlignment(.center)

@@ -148,24 +148,6 @@ struct MainBodyView: View {
 							Spacer()
 							
 							VStack {
-								HStack(spacing: 0.0) {
-									Button(action: {
-										print("Help tapped!")
-									}) {
-										VStack {
-											Image(systemName: "questionmark")
-												.font(.title)
-												.padding(.all, 5)
-										}
-										.padding()
-										.foregroundColor(.white)
-										.background(Color.blue)
-										.cornerRadius(90)
-										.zIndex(100)
-									}
-								}
-								.padding([.top, .trailing], 20)
-								
 								Spacer()
 								
 								HStack(spacing: 0.0) {
