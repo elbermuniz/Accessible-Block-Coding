@@ -27,7 +27,7 @@ class PlayerState: ObservableObject {
 
 struct TutorialView: View {
 	@EnvironmentObject var playerState : PlayerState
-	@State private var vURL = URL(fileURLWithPath: Bundle.main.path(forResource: "video", ofType: ".m4v")!)
+	@State private var vURL = URL(fileURLWithPath: Bundle.main.path(forResource: "tutorial", ofType: ".m4v")!)
 	@State private var showVideoPlayer = false
 	
 	let gradient = Gradient(colors: [.gray, .black])
@@ -55,7 +55,7 @@ struct TutorialView: View {
 						ZStack{
 							Rectangle()
 								.cornerRadius(12)
-							Text("User video")
+							Text("Play video")
 								.font(.largeTitle)
 								.fontWeight(.heavy)
 								.foregroundColor(.white)
@@ -72,25 +72,25 @@ struct TutorialView: View {
 					
 					Spacer()
 					
-					Button(action: { self.showVideoPlayer = true }) {
-						ZStack{
-							Rectangle()
-								.cornerRadius(12)
-							Text("Administrator/ \nTeacher video")
-								.font(.largeTitle)
-								.fontWeight(.heavy)
-								.foregroundColor(.white)
-						}
-					}
-					.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
-						AVPlayerView(videoURL: self.$vURL)
-							.edgesIgnoringSafeArea(.all)
-							.environmentObject(self.playerState)
-					}
-					.shadow(color: Color.blue, radius: 10)
-					.shadow(color: Color.white, radius: 10)
-					.frame(width: 400, height: 120)
-					
+//					Button(action: { self.showVideoPlayer = true }) {
+//						ZStack{
+//							Rectangle()
+//								.cornerRadius(12)
+//							Text("Administrator/ \nTeacher video")
+//								.font(.largeTitle)
+//								.fontWeight(.heavy)
+//								.foregroundColor(.white)
+//						}
+//					}
+//					.sheet(isPresented: self.$showVideoPlayer, onDismiss: { self.playerState.currentPlayer?.pause() }) {
+//						AVPlayerView(videoURL: self.$vURL)
+//							.edgesIgnoringSafeArea(.all)
+//							.environmentObject(self.playerState)
+//					}
+//					.shadow(color: Color.blue, radius: 10)
+//					.shadow(color: Color.white, radius: 10)
+//					.frame(width: 400, height: 120)
+//
 					Spacer()
 				}
 				.frame(minWidth: 0, maxWidth: geometry.size.width, minHeight:0, maxHeight: geometry.size.height)

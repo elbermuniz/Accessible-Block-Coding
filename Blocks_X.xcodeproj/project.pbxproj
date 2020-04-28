@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5F287D99243CF31000197A85 /* Sphere_(Shaded).png in Resources */ = {isa = PBXBuildFile; fileRef = 5F287D98243CF31000197A85 /* Sphere_(Shaded).png */; };
 		5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F287D9C243CF93500197A85 /* LaunchScreen.storyboard */; };
-		72118C21245226B600F4CE72 /* video.m4v in Resources */ = {isa = PBXBuildFile; fileRef = 7241D330243BF80B0071BB99 /* video.m4v */; };
 		724051612434D5B50020D98E /* SpheroController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724051602434D5B50020D98E /* SpheroController.swift */; };
 		724F7AF4242BBD8000AC94AB /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF3242BBD8000AC94AB /* TutorialView.swift */; };
 		724F7AF6242BC63700AC94AB /* MainBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 724F7AF5242BC63700AC94AB /* MainBodyView.swift */; };
@@ -28,13 +27,13 @@
 		72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72DE4BF4240703DA0075DBB6 /* Assets.xcassets */; };
 		72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72DE4BF7240703DA0075DBB6 /* Preview Assets.xcassets */; };
 		72F162CD2437AB8E000AE52B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 72F162CC2437AB8E000AE52B /* .gitignore */; };
+		E837A20F2457C74A007BB05D /* tutorial.m4v in Resources */ = {isa = PBXBuildFile; fileRef = E837A20E2457C74A007BB05D /* tutorial.m4v */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5F287D98243CF31000197A85 /* Sphere_(Shaded).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sphere_(Shaded).png"; sourceTree = "<group>"; };
 		5F287D9C243CF93500197A85 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		724051602434D5B50020D98E /* SpheroController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpheroController.swift; sourceTree = "<group>"; };
-		7241D330243BF80B0071BB99 /* video.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = video.m4v; path = Blocks_X/video.m4v; sourceTree = SOURCE_ROOT; };
 		724F7AF3242BBD8000AC94AB /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		724F7AF5242BC63700AC94AB /* MainBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBodyView.swift; sourceTree = "<group>"; };
 		7258EC8D2408B9FD004DC42C /* BlockRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockRow.swift; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		72DE4BF7240703DA0075DBB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72DE4BFC240703DA0075DBB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72F162CC2437AB8E000AE52B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		E837A20E2457C74A007BB05D /* tutorial.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; name = tutorial.m4v; path = "../../Pictures/Photos Library.photoslibrary/Masters/2020/04/28/20200428-020435/tutorial.m4v"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +109,7 @@
 				72C98B90243E26EC003FD55B /* bad-sound.mp3 */,
 				72C98B94243E2F54003FD55B /* good-sound.mp3 */,
 				72C98B92243E272F003FD55B /* PlaySound.swift */,
-				7241D330243BF80B0071BB99 /* video.m4v */,
+				E837A20E2457C74A007BB05D /* tutorial.m4v */,
 				72DE4BEE240703D30075DBB6 /* AppDelegate.swift */,
 				72DE4BF0240703D30075DBB6 /* SceneDelegate.swift */,
 				72DE4BF2240703D30075DBB6 /* ContentView.swift */,
@@ -198,9 +198,9 @@
 				72F162CD2437AB8E000AE52B /* .gitignore in Resources */,
 				5F287D99243CF31000197A85 /* Sphere_(Shaded).png in Resources */,
 				72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */,
-				72118C21245226B600F4CE72 /* video.m4v in Resources */,
 				5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */,
 				72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */,
+				E837A20F2457C74A007BB05D /* tutorial.m4v in Resources */,
 				72C98B95243E2F54003FD55B /* good-sound.mp3 in Resources */,
 				7258EC912408C5E0004DC42C /* blockData.json in Resources */,
 			);
@@ -352,7 +352,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = BFZYMS7L7S;
+				DEVELOPMENT_TEAM = 4FN3JYM249;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -360,7 +360,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.unc.cs.comp523.s20.Blocks-X";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.unc.cs.comp523.s20.Blocks-Xx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -375,7 +375,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Blocks_X/Preview Content\"";
-				DEVELOPMENT_TEAM = BFZYMS7L7S;
+				DEVELOPMENT_TEAM = 4FN3JYM249;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Blocks_X/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -383,7 +383,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.unc.cs.comp523.s20.Blocks-X";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.unc.cs.comp523.s20.Blocks-Xx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
