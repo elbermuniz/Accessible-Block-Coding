@@ -53,7 +53,7 @@
 		72DE4BF7240703DA0075DBB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72DE4BFC240703DA0075DBB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72F162CC2437AB8E000AE52B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		E837A21224588BCB007BB05D /* tutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = tutorial.mov; path = ../../Downloads/tutorial.mov; sourceTree = "<group>"; };
+		E837A21224588BCB007BB05D /* tutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = tutorial.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
