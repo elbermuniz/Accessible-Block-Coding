@@ -27,7 +27,7 @@
 		72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72DE4BF4240703DA0075DBB6 /* Assets.xcassets */; };
 		72DE4BF8240703DA0075DBB6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72DE4BF7240703DA0075DBB6 /* Preview Assets.xcassets */; };
 		72F162CD2437AB8E000AE52B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 72F162CC2437AB8E000AE52B /* .gitignore */; };
-		E837A21124588AFE007BB05D /* tutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = E837A21024588AFE007BB05D /* tutorial.mov */; };
+		E837A21324588BCB007BB05D /* tutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = E837A21224588BCB007BB05D /* tutorial.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,7 +53,7 @@
 		72DE4BF7240703DA0075DBB6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72DE4BFC240703DA0075DBB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		72F162CC2437AB8E000AE52B /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		E837A21024588AFE007BB05D /* tutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = tutorial.mov; path = ../../Downloads/tutorial.mov; sourceTree = "<group>"; };
+		E837A21224588BCB007BB05D /* tutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = tutorial.mov; path = ../../Downloads/tutorial.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +108,8 @@
 			children = (
 				72C98B90243E26EC003FD55B /* bad-sound.mp3 */,
 				72C98B94243E2F54003FD55B /* good-sound.mp3 */,
-				E837A21024588AFE007BB05D /* tutorial.mov */,
 				72C98B92243E272F003FD55B /* PlaySound.swift */,
+				E837A21224588BCB007BB05D /* tutorial.mov */,
 				72DE4BEE240703D30075DBB6 /* AppDelegate.swift */,
 				72DE4BF0240703D30075DBB6 /* SceneDelegate.swift */,
 				72DE4BF2240703D30075DBB6 /* ContentView.swift */,
@@ -201,7 +201,7 @@
 				5F287D9D243CF93500197A85 /* LaunchScreen.storyboard in Resources */,
 				72DE4BF5240703DA0075DBB6 /* Assets.xcassets in Resources */,
 				72C98B95243E2F54003FD55B /* good-sound.mp3 in Resources */,
-				E837A21124588AFE007BB05D /* tutorial.mov in Resources */,
+				E837A21324588BCB007BB05D /* tutorial.mov in Resources */,
 				7258EC912408C5E0004DC42C /* blockData.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
