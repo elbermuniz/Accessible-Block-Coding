@@ -27,7 +27,7 @@ class PlayerState: ObservableObject {
 
 struct TutorialView: View {
 	@EnvironmentObject var playerState : PlayerState
-	@State private var vURL = URL(fileURLWithPath: Bundle.main.path(forResource: "tutorial", ofType: ".m4v")!)
+	@State private var vURL = URL(fileURLWithPath: Bundle.main.path(forResource: "tutorial", ofType: ".mov")!)
 	@State private var showVideoPlayer = false
 	
 	let gradient = Gradient(colors: [.gray, .black])
