@@ -25,7 +25,7 @@ Select your device from the “Active Scheme” tab in the top left of XCode
 Build and run the program
 
 
-## Via TestFlight - 
+## Via TestFlight - (Contact a team member for TestFlight invitation)
 Install TestFlight app on iPad
 
 Click “View in TestFlight” button on email link
